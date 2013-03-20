@@ -1,0 +1,72 @@
+.ui-slider {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.ui-slider .arrow{
+	position: absolute;
+	z-index: 10;
+	top: 50%;
+	width: 100px;
+	height: 100px;
+	margin-top: -50px;
+	background: rgba(255,255,255, .5);
+	border: solid #fff 8px;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 5em;
+	text-align: center;
+}
+
+.ui-slider .prev{
+	left: 2%;
+}
+
+.ui-slider .next{
+	right: 2%;
+}
+
+.ui-slider .wrapper {
+	background-color: #000;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: 1;
+	-webkit-transition: .5s ease;
+	-moz-transition: .5s ease;
+	-o-transition: .5s ease;
+	-ms-transition: .5s ease;
+	transition: .5s ease;
+}
+.ui-slider .slide {
+	float: left;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.ui-slider .nav{
+	position: absolute;
+	bottom: 1%;
+	width: 100%;
+	z-index: 9;
+	text-align: center;
+}
+
+.ui-slider .nav li {
+	display: inline-block;
+}
+
+.ui-slider .nav li a{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background: #ccc;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.ui-slider .nav li.selected a{
+	background: #fff;
+}
