@@ -1,0 +1,10 @@
+{
+  "name": "backbone.ui.slider",
+  "version": "0.1.0",
+  "main": ["./js/backbone.ui.slider.js"],
+  "dependencies": { 
+	  "backbone" : "0.9.10", 
+	  "underscore" : "1.4.4", 
+	  "jquery" : "1.8.3"
+  }
+}
