@@ -44,7 +44,7 @@ A more detailed list of all the available options.
 * ***template***: A template method to parse the html fragment
 
 
-### Examples: 
+## Examples: 
 
 * [Fullscreen Slideshow](http://rawgithub.com/backbone-ui/slider/master/_examples/fullscreen.html)
 
