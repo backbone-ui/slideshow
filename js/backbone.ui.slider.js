@@ -53,7 +53,6 @@
 		clickNext : function( e ){
 			e.preventDefault();
 			var next = $(this.el).find(".slide.active").next().index();
-			console.log("next", next);
 			if( next > -1 ) this.activate( next );
 		}, 
 		
@@ -92,7 +91,7 @@
 			if( num == 0 ){
 				$(this.el).find(".prev").hide();
 				$(this.el).find(".next").show();
-			} else if( num ==  this.model.get("media")-1 ){
+			} else if( num ==  this.data.length-1 ){
 				$(this.el).find(".prev").show();
 				$(this.el).find(".next").hide();
 			} else {

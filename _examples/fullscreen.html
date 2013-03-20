@@ -53,7 +53,7 @@
 	// LOGIC
 	var view = new Backbone.UI.Slider({
 			el : "#slider", 
-			model : new Backbone.Collection(slides),
+			collection : new Backbone.Collection(slides),
 			url : "../html/slider.html"
 	});
 	view.render();
