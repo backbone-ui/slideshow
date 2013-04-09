@@ -4,7 +4,7 @@
     <title>Fullscreen Slideshow</title>
     
     <!-- Base styles -->
-    <link rel="stylesheet" href="../css/backbone.ui.slider.css">
+    <link rel="stylesheet" href="../assets/css/backbone.ui.slider.css">
     
     <style type="text/css">
 	* {
@@ -45,7 +45,7 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js"></script> 
 
 <!-- Extension lib -->
-<script type="text/javascript" src="../js/backbone.ui.slider.js"></script> 
+<script type="text/javascript" src="../assets/js/backbone.ui.slider.js"></script> 
 
 <script type="text/javascript">
 	_.templateSettings.variable = "slides";
@@ -54,7 +54,7 @@
 	var view = new Backbone.UI.Slider({
 			el : "#slider", 
 			collection : new Backbone.Collection(slides),
-			url : "../html/slider.html"
+			url : "../assets/html/slider.html"
 	});
 	view.render();
 </script>
