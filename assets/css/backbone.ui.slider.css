@@ -5,7 +5,7 @@
 	overflow: hidden;
 }
 
-.ui-slider .arrow{
+.ui-slider .arrow {
 	position: absolute;
 	z-index: 10;
 	top: 50%;
@@ -22,11 +22,11 @@
 	cursor: pointer;
 }
 
-.ui-slider .prev{
+.ui-slider .prev {
 	left: 2%;
 }
 
-.ui-slider .next{
+.ui-slider .next {
 	right: 2%;
 }
 
@@ -48,7 +48,7 @@
 	height: 100%;
 }
 
-.ui-slider .nav{
+.ui-slider .nav {
 	position: absolute;
 	bottom: 1%;
 	width: 100%;
@@ -60,7 +60,7 @@
 	display: inline-block;
 }
 
-.ui-slider .nav li a{
+.ui-slider .nav li a {
 	display: block;
 	width: 20px;
 	height: 20px;
@@ -69,6 +69,6 @@
 	border-radius: 50%;
 }
 
-.ui-slider .nav li.selected a{
+.ui-slider .nav li.selected a {
 	background: #fff;
 }
