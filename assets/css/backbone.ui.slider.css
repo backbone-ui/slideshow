@@ -35,6 +35,8 @@
 	min-width: 100%;
 	min-height: 100%;
 	z-index: 1;
+}
+.ui-slider .wrapper.transition {
 	-webkit-transition: .5s ease;
 	-moz-transition: .5s ease;
 	-o-transition: .5s ease;

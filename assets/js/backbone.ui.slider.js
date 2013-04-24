@@ -22,7 +22,8 @@
 		options: {
 			width : 0,
 			height: 0,
-			num: 0
+			num: 0,
+			transition: true
 		}, 
 		
 		initialize: function(){
@@ -79,8 +80,12 @@
 			});
 			
 			// position the wrapper
-			$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this.options.width });
 			
+			if (this.options.transition) {
+				$(this.el).find(".wrapper").removeClass("transition").css({ marginLeft : -1 * this.options.num * this.options.width }).delay("800").addClass("transition");
+			} else {
+				$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this.options.width });
+			}
 		}, 
 		
 		activate : function( num ){
