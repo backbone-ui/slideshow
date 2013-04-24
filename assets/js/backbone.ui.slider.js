@@ -21,7 +21,8 @@
 		// default options
 		options: {
 			width : 0,
-			height: 0
+			height: 0,
+			num: 0
 		}, 
 		
 		initialize: function(){
@@ -77,9 +78,14 @@
 				height : this.options.height
 			});
 			
+			// position the wrapper
+			$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this.options.width });
+			
 		}, 
 		
 		activate : function( num ){
+			//
+			this.options.num = num;
 			// set the active classes
 			$(this.el).find(".slide:eq("+ num +")").addClass("active").siblings().removeClass("active");
 			$(this.el).find(".nav li:eq("+ num +")").addClass("selected").siblings().removeClass("selected");
