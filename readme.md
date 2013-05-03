@@ -16,12 +16,12 @@ bower install backbone.ui.slideshow
 * [Underscore](http://underscorejs.org/)
 * [jQuery](http://jquery.com/) (or alternative event handler)
 
-Note that the slider uses APP.View from [Backbone APP](http://github.com/makesites/backbone-app) if available, but falls back gracefully if you prefer using custom render logic. 
+Note that the slideshow uses APP.View from [Backbone APP](http://github.com/makesites/backbone-app) if available, but falls back gracefully if you prefer using custom render logic. 
 
 
 ## Usage
 
-In its most simple application, a model with the slides and an html fragment (either the markup or a url of the file containing it) should be enough to render the slider. 
+In its most simple application, a model with the slides and an html fragment (either the markup or a url of the file containing it) should be enough to render the slideshow. 
 
 ```
 var view = new Backbone.UI.Slideshow({
@@ -46,7 +46,7 @@ A more detailed list of all the available options.
 
 ## Examples 
 
-* [Fullscreen Slideshow](http://rawgithub.com/backbone-ui/slider/master/_examples/fullscreen.html)
+* [Fullscreen Slideshow](http://rawgithub.com/backbone-ui/slideshow/master/examples/fullscreen.html)
 
 
 ## Credits
