@@ -1,11 +1,11 @@
-.ui-slider {
+.ui-slideshow {
 	position: relative;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 }
 
-.ui-slider .arrow {
+.ui-slideshow .arrow {
 	position: absolute;
 	z-index: 10;
 	top: 50%;
@@ -22,35 +22,35 @@
 	cursor: pointer;
 }
 
-.ui-slider .prev {
+.ui-slideshow .prev {
 	left: 2%;
 }
 
-.ui-slider .next {
+.ui-slideshow .next {
 	right: 2%;
 }
 
-.ui-slider .wrapper {
+.ui-slideshow .wrapper {
 	background-color: #000;
 	min-width: 100%;
 	min-height: 100%;
 	z-index: 1;
 }
-.ui-slider .wrapper.transition {
+.ui-slideshow .wrapper.transition {
 	-webkit-transition: .5s ease;
 	-moz-transition: .5s ease;
 	-o-transition: .5s ease;
 	-ms-transition: .5s ease;
 	transition: .5s ease;
 }
-.ui-slider .slide {
+.ui-slideshow .slide {
 	float: left;
 	position: relative;
 	width: 100%;
 	height: 100%;
 }
 
-.ui-slider .nav {
+.ui-slideshow .nav {
 	position: absolute;
 	bottom: 1%;
 	width: 100%;
@@ -58,11 +58,11 @@
 	text-align: center;
 }
 
-.ui-slider .nav li {
+.ui-slideshow .nav li {
 	display: inline-block;
 }
 
-.ui-slider .nav li a {
+.ui-slideshow .nav li a {
 	display: block;
 	width: 20px;
 	height: 20px;
@@ -71,6 +71,6 @@
 	border-radius: 50%;
 }
 
-.ui-slider .nav li.selected a {
+.ui-slideshow .nav li.selected a {
 	background: #fff;
 }

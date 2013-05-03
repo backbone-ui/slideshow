@@ -1,7 +1,7 @@
-// Backbone.js Slider extension
+// Backbone.js Slideshow extension
 //
 // Created by: Makis Tracend (@tracend)
-// Source: https://github.com/backbone-ui/slider
+// Source: https://github.com/backbone-ui/slideshow
 //
 // Licensed under the MIT license: 
 // http://makesites.org/licenses/MIT
@@ -17,7 +17,7 @@
 							: Backbone.View.extend({options:{data:false,template:false,url:false,type:false},state:{loaded:false},events:{"click a[rel='external']":"clickExternal"},initialize:function(e){var t=this;$(this.el).unbind();_.bindAll(this,"render","clickExternal","postRender");this.data=this.model||this.collection||null;this.options.data=!_.isNull(this.data);if(this.options.attr){$(this.el).attr("data-view",this.options.attr)}else{$(this.el).removeAttr("data-view")}var n=this.options.html||null;var r=this.options.template||typeof APP=="undefined"?this.options.template:APP.Template||false;if(r){if(_.isUndefined(this.options.type))this.options.type="default";this.template=new r(n,{url:this.options.url});this.template.bind("loaded",this.render)}else if(this.options.url){$.get(this.options.url,function(e){t.template=_.template(e);t.render()})}else{this.template=_.template(n);this.render()}if(this.options.data){this.data.bind("change",this.render);this.data.bind("reset",this.render);this.data.bind("add",this.render);this.data.bind("remove",this.render)}if(!this.options.data||this.options.data&&!_.isEmpty(this.data.toJSON())){this.render()}},render:function(){if(!this.template)return;if(!_.isUndefined(this.preRender))this.preRender();var e=this.options.type?this.template.get(this.options.type):this.template;var t=this.options.data?this.data.toJSON():{};var n=e instanceof Function?e(t):e;if(this.options.append){$(this.el).append(n)}else{$(this.el).html(n)}if(!_.isUndefined(this.postRender))this.postRender()},postRender:function(){$(this.el).show();if(!this.options.data||this.options.data&&!_.isEmpty(this.data.toJSON())){$(this.el).removeClass("loading");this.state.loaded=true;this.trigger("loaded")}},listen:function(e,t,n){var r=typeof t=="string"?[t]:t;for(var i in r){e.bind(r[i],n)}},clickExternal:function(e){e.preventDefault();var t=this.findLink(e.target);if(typeof pageTracker!="undefined")t=pageTracker._getLinkerUrl(t);try{window.plugins.childBrowser.showWebPage(t)}catch(n){window.open(t,"_blank")}return false},findLink:function(e){if(e.tagName!="A"){return $(e).closest("a").attr("href")}else{return $(e).attr("href")}},_navigate:function(e){}});
 	
 			
-	Backbone.UI.Slider = View.extend({
+	Backbone.UI.Slideshow = View.extend({
 		// default options
 		options: {
 			width : 0,
