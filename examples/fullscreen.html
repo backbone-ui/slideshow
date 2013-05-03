@@ -4,7 +4,7 @@
     <title>Fullscreen Slideshow</title>
     
     <!-- Base styles -->
-    <link rel="stylesheet" href="../assets/css/backbone.ui.slider.css">
+    <link rel="stylesheet" href="../assets/css/backbone.ui.slideshow.css">
     
     <style type="text/css">
 	* {
@@ -36,27 +36,28 @@
 </head>
 <body>
 
-<div id="slider" class="ui-slider"></div>
+<div id="slideshow" class="ui-slideshow"></div>
 
 <!-- Dependencies -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script> 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0.beta6/handlebars.min.js"></script> 
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js"></script> 
-
+<script type="text/javascript" src="http://rawgithub.com/makesites/backbone-app/master/build/backbone.app-min.js"></script> 
+    
 <!-- Extension lib -->
-<script type="text/javascript" src="../assets/js/backbone.ui.slider.js"></script> 
+<script type="text/javascript" src="../assets/js/backbone.ui.slideshow.js"></script> 
 
 <script type="text/javascript">
-	_.templateSettings.variable = "slides";
 	
 	// LOGIC
-	var view = new Backbone.UI.Slider({
-			el : "#slider", 
+	var view = new Backbone.UI.Slideshow({
+			el : "#slideshow", 
 			collection : new Backbone.Collection(slides),
-			url : "../assets/html/slider.html"
+			url : "../assets/html/slides.html"
 	});
-	view.render();
+    
 </script>
 
 </body>
