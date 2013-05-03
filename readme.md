@@ -1,4 +1,4 @@
-# Backbone UI: Slider
+# Backbone UI: Slideshow
 
 A simple slideshow feature using existing Backbone structures and CSS3 for lightweight rendering. 
 
@@ -7,7 +7,7 @@ A simple slideshow feature using existing Backbone structures and CSS3 for light
 
 Using bower: 
 ```
-bower install backbone.ui.slider
+bower install backbone.ui.slideshow
 ```
 
 ## Dependencies
@@ -16,7 +16,7 @@ bower install backbone.ui.slider
 * [Underscore](http://underscorejs.org/)
 * [jQuery](http://jquery.com/) (or alternative event handler)
 
-Note that the slider is using APP.View from [Backbone APP](http://github.com/makesites/backbone-app) but is automatically injected if not already available. 
+Note that the slider uses APP.View from [Backbone APP](http://github.com/makesites/backbone-app) if available, but falls back gracefully if you prefer using custom render logic. 
 
 
 ## Usage
@@ -24,10 +24,10 @@ Note that the slider is using APP.View from [Backbone APP](http://github.com/mak
 In its most simple application, a model with the slides and an html fragment (either the markup or a url of the file containing it) should be enough to render the slider. 
 
 ```
-var view = new Backbone.UI.Slider({
-		el : "#slider", 
+var view = new Backbone.UI.Slideshow({
+		el : "#slidehow", 
 		collection : new Backbone.Collection(slides),
-		url : "../html/slider.html"
+		url : "../html/slides.html"
 });
 view.render();
 ```
