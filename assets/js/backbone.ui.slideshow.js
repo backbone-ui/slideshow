@@ -23,7 +23,8 @@
 			autoplay: false,
 			autoloop: false,
 			transition: true,
-			timeout: 2000
+			timeout: 2000,
+			_direction: "right"
 		},
 
 		events : {
@@ -95,7 +96,9 @@
 
 		activate : function( num ){
 			var self = this;
-			//
+			// set direction
+			this.options._direction = ( this.options.num - num > 0 )? "left" : "right";
+			// save current slide
 			this.options.num = num;
 			// set the active classes
 			$(this.el).find(".slide:eq("+ num +")").addClass("active").siblings().removeClass("active");
@@ -126,7 +129,8 @@
 			}
 			// if looping make sure there's always a slide on the sides
 			if( this.options.autoloop ){
-
+				//var $first = $(this.el).find(".slide:first");
+				//var $last = $(this.el).find(".slide:last");
 			}
 
 		}
