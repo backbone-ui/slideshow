@@ -98,8 +98,31 @@
 			var self = this;
 			// set direction
 			this.options._direction = ( this.options.num - num > 0 )? "left" : "right";
-			// save current slide
-			this.options.num = num;
+			// if looping make sure there's always a slide on the sides
+			if( this.options.autoloop ){
+				var $first = $(this.el).find(".slide:first");
+				var $last = $(this.el).find(".slide:last");
+				var $wrapper = $(this.el).find(".wrapper");
+				if( num == 0 ){
+					$last.remove();
+					$wrapper.prepend($last);
+					num++;
+					// offset the viewport
+					if( this.options.transition ) $wrapper.removeClass("transition");
+					$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
+					console.log( $wrapper.css("marginLeft") );
+				} else if( num == this.options.slides-1 ){
+					$first.remove();
+					$wrapper.append($first);
+					num--;
+					// offset the viewport
+					if( this.options.transition ) $wrapper.removeClass("transition");
+					$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
+					console.log( $wrapper.css("marginLeft") );
+				}
+				// re-enable transitions
+				if( this.options.transition ) $wrapper.addClass("transition");
+			}
 			// set the active classes
 			$(this.el).find(".slide:eq("+ num +")").addClass("active").siblings().removeClass("active");
 			$(this.el).find(".nav li:eq("+ num +")").addClass("selected").siblings().removeClass("selected");
@@ -113,7 +136,7 @@
 			} else if( num == 0 ){
 				$(this.el).find(".prev").hide();
 				$(this.el).find(".next").show();
-			} else if( num ==  this.options.slides-1 ){
+			} else if( num == this.options.slides-1 ){
 				$(this.el).find(".prev").show();
 				$(this.el).find(".next").hide();
 			} else {
@@ -121,17 +144,15 @@
 				$(this.el).find(".next").show();
 			}
 			// auto play next slide
-			if( this.options.num < this.options.slides-1 ){
+			if( num < this.options.slides-1 ){
 				if( this.timer ) clearTimeout( this.timer );
 				this.timer = setTimeout(function(){
 					$(self.el).find(".next").click();
 				}, this.options.timeout);
 			}
-			// if looping make sure there's always a slide on the sides
-			if( this.options.autoloop ){
-				//var $first = $(this.el).find(".slide:first");
-				//var $last = $(this.el).find(".slide:last");
-			}
+			// save current slide
+			this.options.num = num;
+
 
 		}
 
