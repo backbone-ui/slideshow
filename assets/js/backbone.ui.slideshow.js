@@ -20,6 +20,8 @@
 			height: 0,
 			num: 0,
 			slides: 0,
+			autoplay: false,
+			autoloop: false,
 			transition: true
 		},
 
@@ -33,7 +35,7 @@
 			var self = this;
 			window.addEventListener('resize', function(){ self.position() }, false);
 			//
-			// #1 find the slend number based on either the data or the markup
+			// #1 find the slide number based on either the data or the markup
 			this.options.slides = ( this.collection ) ? this.collection.length : $(this.el).find(".slide").length;
 
 			return View.prototype.initialize.apply(this, arguments );
@@ -99,7 +101,9 @@
 			$(this.el).find(".wrapper").css({ marginLeft : -1 * num * this.options.width });
 
 			// update the prev-next arrows - remove as needed
-			if( num == 0 ){
+			if( this.options.autoloop ){
+				// do nothing
+			} else if( num == 0 ){
 				$(this.el).find(".prev").hide();
 				$(this.el).find(".next").show();
 			} else if( num ==  this.options.slides-1 ){
@@ -109,6 +113,11 @@
 				$(this.el).find(".prev").show();
 				$(this.el).find(".next").show();
 			}
+			// if looping make sure there's always a slide on the sides
+			if( this.options.autoloop ){
+
+			}
+
 		}
 
 	});
