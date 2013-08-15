@@ -147,7 +147,8 @@
 			if( this.options.autoplay && num < this.options.slides-1 ){
 				if( this.timer ) clearTimeout( this.timer );
 				this.timer = setTimeout(function(){
-					$(self.el).find(".next").click();
+					//
+					self.activate( self.options.num+1 );
 				}, this.options.timeout);
 			}
 			// save current slide
