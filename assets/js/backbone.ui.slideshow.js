@@ -144,7 +144,7 @@
 				$(this.el).find(".next").show();
 			}
 			// auto play next slide
-			if( num < this.options.slides-1 ){
+			if( this.options.autoplay && num < this.options.slides-1 ){
 				if( this.timer ) clearTimeout( this.timer );
 				this.timer = setTimeout(function(){
 					$(self.el).find(".next").click();
