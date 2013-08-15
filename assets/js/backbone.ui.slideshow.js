@@ -19,6 +19,7 @@
 			width : 0,
 			height: 0,
 			num: 0,
+			slides: 0,
 			transition: true
 		},
 
@@ -32,6 +33,9 @@
 			var self = this;
 			window.addEventListener('resize', function(){ self.position() }, false);
 			//
+			// #1 find the slend number based on either the data or the markup
+			this.options.slides = ( this.collection ) ? this.collection.length : $(this.el).find(".slide").length;
+
 			return View.prototype.initialize.apply(this, arguments );
 		},
 
@@ -66,7 +70,7 @@
 			this.options.height = $(this.el).height();
 
 			$(this.el).find(".wrapper").css({
-				width : this.options.width * this.data.length,
+				width : this.options.width * this.options.slides,
 				height : this.options.height
 			});
 
@@ -98,7 +102,7 @@
 			if( num == 0 ){
 				$(this.el).find(".prev").hide();
 				$(this.el).find(".next").show();
-			} else if( num ==  this.data.length-1 ){
+			} else if( num ==  this.options.slides-1 ){
 				$(this.el).find(".prev").show();
 				$(this.el).find(".next").hide();
 			} else {
