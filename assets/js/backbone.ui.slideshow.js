@@ -32,6 +32,8 @@
 			"click .nav a" : "clickBullet"
 		},
 
+		timer: false,
+
 		initialize: function(){
 			var self = this;
 			window.addEventListener('resize', function(){ self.position() }, false);
@@ -117,7 +119,8 @@
 			}
 			// auto play next slide
 			if( this.options.num < this.options.slides-1 ){
-				setTimeout(function(){
+				if( this.timer ) clearTimeout( this.timer );
+				this.timer = setTimeout(function(){
 					$(self.el).find(".next").click();
 				}, this.options.timeout);
 			}
