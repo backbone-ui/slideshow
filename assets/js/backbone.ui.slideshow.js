@@ -22,7 +22,8 @@
 			slides: 0,
 			autoplay: false,
 			autoloop: false,
-			transition: true
+			transition: true,
+			timeout: 2000
 		},
 
 		events : {
@@ -91,6 +92,7 @@
 		},
 
 		activate : function( num ){
+			var self = this;
 			//
 			this.options.num = num;
 			// set the active classes
@@ -112,6 +114,12 @@
 			} else {
 				$(this.el).find(".prev").show();
 				$(this.el).find(".next").show();
+			}
+			// auto play next slide
+			if( this.options.num < this.options.slides-1 ){
+				setTimeout(function(){
+					$(self.el).find(".next").click();
+				}, this.options.timeout);
 			}
 			// if looping make sure there's always a slide on the sides
 			if( this.options.autoloop ){
