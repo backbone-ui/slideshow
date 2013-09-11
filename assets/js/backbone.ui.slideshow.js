@@ -46,6 +46,9 @@
 		},
 
 		postRender: function(){
+			// render slide dimensions as a number
+			this.options.width = (this.options.width == "100%") ? $(this.el).width() : this.options.width;
+			this.options.height = (this.options.height) ? $(this.el).height() : this.options.height;
 			//
 			this.position();
 			// set the first media element as active
@@ -71,29 +74,26 @@
 		},
 
 		position : function(){
-			/*
-			this.options.width = $(this.el).width();
-			this.options.height = $(this.el).height();
-			*/
 
 			$(this.el).find(".slide").css({
 				width : this.options.width,
 				height : this.options.height
 			});
-			// register width as a number
-			this._slideWidth = $(this.el).find(".slide:first").width();
+			// update values...
+			this.options.width = $(this.el).find(".slide:first").width();
+			this.options.height = $(this.el).find(".slide:first").height();
 
 			$(this.el).find(".wrapper").css({
-				width : this._slideWidth * this.options.slides,
+				width : this.options.width * this.options.slides,
 				height : this.options.height
 			});
 
 			// position the wrapper
 
 			if (this.options.transition) {
-				$(this.el).find(".wrapper").removeClass("transition").css({ marginLeft : -1 * this.options.num * this._slideWidth }).delay("800").addClass("transition");
+				$(this.el).find(".wrapper").removeClass("transition").css({ marginLeft : -1 * this.options.num * this.options.width }).delay("800").addClass("transition");
 			} else {
-				$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this._slideWidth });
+				$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this.options.width });
 			}
 		},
 
@@ -112,14 +112,14 @@
 					num++;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
-					$wrapper.css({ marginLeft : -1 * (num+1) * this._slideWidth });
+					$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
 				} else if( num == this.options.slides-1 ){
 					$first.remove();
 					$wrapper.append($first);
 					num--;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
-					$wrapper.css({ marginLeft : -1 * (num-1) * this._slideWidth });
+					$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
 				}
 				// re-enable transitions
 				if( this.options.transition ) $wrapper.addClass("transition");
@@ -131,7 +131,7 @@
 			// position the wrapper
 			// limit the container to the right side
 			var overflow = $(this.el).find(".wrapper").width() - $(this.el).width();
-			var wrapperPos = Math.min( ( num * this._slideWidth), overflow);
+			var wrapperPos = Math.min( ( num * this.options.width), overflow);
 			$(this.el).find(".wrapper").css({ marginLeft : -1 * wrapperPos });
 
 			// update the prev-next arrows - remove as needed
