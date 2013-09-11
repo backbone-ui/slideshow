@@ -6,7 +6,7 @@
 // Licensed under the MIT license:
 // http://makesites.org/licenses/MIT
 
-(function(_, Backbone) {
+(function($, _, Backbone) {
 
 	// fallbacks
 	if( _.isUndefined( Backbone.UI ) ) Backbone.UI = {};
@@ -165,4 +165,19 @@
 
 	});
 
-})(this._, this.Backbone);
+	// Support module loaders
+	if ( typeof module === "object" && module && typeof module.exports === "object" ) {
+		// Expose as module.exports in loaders that implement CommonJS module pattern.
+		module.exports = Backbone.UI.Slideshow;
+	} else {
+		// Register as a named AMD module, used in Require.js
+		if ( typeof define === "function" && define.amd ) {
+			define( "backbone.ui.slideshow", [], function () { return Backbone.UI.Slideshow; } );
+		}
+	}
+	// If there is a window object, that at least has a document property
+	if ( typeof window === "object" && typeof window.document === "object" ) {
+		window.Backbone = Backbone;
+	}
+
+})(this.jQuery, this._, this.Backbone);
