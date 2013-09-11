@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title>Static Slideshow</title>
+
+	<!-- Base styles -->
+	<link rel="stylesheet" href="../assets/css/backbone.ui.slideshow.css">
+
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	.slide {
+		text-align: center;
+	}
+	</style>
+</head>
+<body>
+
+<div class="container">
+<div id="ticker" class="ui-slideshow">
+<div class="wrapper transition">
+
+	<div class="slide">Title one <a href="">click here</a></div>
+	<div class="slide">Title two <a href="">click here</a></div>
+	<div class="slide">Title three <a href="">click here</a></div>
+	<div class="slide">Title four <a href="">click here</a></div>
+	<div class="slide">Title five <a href="">click here</a></div>
+
+</div>
+</div>
+</div>
+
+<!-- Dependencies -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+
+<!-- Extension lib -->
+<script type="text/javascript" src="../assets/js/backbone.ui.slideshow.js"></script>
+
+<script type="text/javascript">
+
+	// LOGIC
+	var view = new Backbone.UI.Slideshow({
+			el : "#ticker",
+			autoplay: true,
+			autoloop: true,
+			timeout: 4000
+	});
+
+	view.postRender();
+</script>
+
+</body>
+</html>
