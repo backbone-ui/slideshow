@@ -36,6 +36,7 @@
 	min-height: 100%;
 	z-index: 1;
 }
+
 .ui-slideshow .wrapper.transition {
 	-webkit-transition: .5s ease;
 	-moz-transition: .5s ease;
@@ -43,6 +44,7 @@
 	-ms-transition: .5s ease;
 	transition: .5s ease;
 }
+
 .ui-slideshow .slide {
 	float: left;
 	position: relative;

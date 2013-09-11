@@ -113,7 +113,6 @@
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
 					$wrapper.css({ marginLeft : -1 * (num+1) * this._slideWidth });
-					console.log( $wrapper.css("marginLeft") );
 				} else if( num == this.options.slides-1 ){
 					$first.remove();
 					$wrapper.append($first);
@@ -121,7 +120,6 @@
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
 					$wrapper.css({ marginLeft : -1 * (num-1) * this._slideWidth });
-					console.log( $wrapper.css("marginLeft") );
 				}
 				// re-enable transitions
 				if( this.options.transition ) $wrapper.addClass("transition");
@@ -131,7 +129,10 @@
 			$(this.el).find(".nav li:eq("+ num +")").addClass("selected").siblings().removeClass("selected");
 
 			// position the wrapper
-			$(this.el).find(".wrapper").css({ marginLeft : -1 * num * this._slideWidth });
+			// limit the container to the right side
+			var overflow = $(this.el).find(".wrapper").width() - $(this.el).width();
+			var wrapperPos = Math.min( ( num * this._slideWidth), overflow);
+			$(this.el).find(".wrapper").css({ marginLeft : -1 * wrapperPos });
 
 			// update the prev-next arrows - remove as needed
 			if( this.options.autoloop ){
