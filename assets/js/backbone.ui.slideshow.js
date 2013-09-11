@@ -45,6 +45,11 @@
 			return View.prototype.initialize.apply(this, arguments );
 		},
 
+		// default render - may be overriden if postRender is included
+		render: function(){
+			this.postRender();
+		},
+
 		postRender: function(){
 			// render slide dimensions as a number
 			this.options.width = (this.options.width == "100%") ? $(this.el).width() : this.options.width;
