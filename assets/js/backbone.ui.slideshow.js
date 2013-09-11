@@ -16,8 +16,8 @@
 	Backbone.UI.Slideshow = View.extend({
 		// default options
 		options: {
-			width : 0,
-			height: 0,
+			width : "100%",
+			height: "100%",
 			num: 0,
 			slides: 0,
 			autoplay: false,
@@ -71,26 +71,29 @@
 		},
 
 		position : function(){
-
+			/*
 			this.options.width = $(this.el).width();
 			this.options.height = $(this.el).height();
-
-			$(this.el).find(".wrapper").css({
-				width : this.options.width * this.options.slides,
-				height : this.options.height
-			});
+			*/
 
 			$(this.el).find(".slide").css({
 				width : this.options.width,
+				height : this.options.height
+			});
+			// register width as a number
+			this._slideWidth = $(this.el).find(".slide:first").width();
+
+			$(this.el).find(".wrapper").css({
+				width : this._slideWidth * this.options.slides,
 				height : this.options.height
 			});
 
 			// position the wrapper
 
 			if (this.options.transition) {
-				$(this.el).find(".wrapper").removeClass("transition").css({ marginLeft : -1 * this.options.num * this.options.width }).delay("800").addClass("transition");
+				$(this.el).find(".wrapper").removeClass("transition").css({ marginLeft : -1 * this.options.num * this._slideWidth }).delay("800").addClass("transition");
 			} else {
-				$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this.options.width });
+				$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this._slideWidth });
 			}
 		},
 
@@ -109,7 +112,7 @@
 					num++;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
-					$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
+					$wrapper.css({ marginLeft : -1 * (num+1) * this._slideWidth });
 					console.log( $wrapper.css("marginLeft") );
 				} else if( num == this.options.slides-1 ){
 					$first.remove();
@@ -117,7 +120,7 @@
 					num--;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
-					$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
+					$wrapper.css({ marginLeft : -1 * (num-1) * this._slideWidth });
 					console.log( $wrapper.css("marginLeft") );
 				}
 				// re-enable transitions
@@ -128,7 +131,7 @@
 			$(this.el).find(".nav li:eq("+ num +")").addClass("selected").siblings().removeClass("selected");
 
 			// position the wrapper
-			$(this.el).find(".wrapper").css({ marginLeft : -1 * num * this.options.width });
+			$(this.el).find(".wrapper").css({ marginLeft : -1 * num * this._slideWidth });
 
 			// update the prev-next arrows - remove as needed
 			if( this.options.autoloop ){
