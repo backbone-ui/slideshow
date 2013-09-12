@@ -8,12 +8,10 @@
 
 (function($, _, Backbone) {
 
-	// fallbacks
-	if( _.isUndefined( Backbone.UI ) ) Backbone.UI = {};
 	// support for Backbone APP() view if available...
-	var View = ( typeof APP !== "undefined" ) ? APP.View : Backbone.View;
+	var View = ( typeof APP != "undefined" && !_.isUndefined( APP.View ) ) ? APP.View : Backbone.View;
 
-	Backbone.UI.Slideshow = View.extend({
+	var Slideshow = View.extend({
 		// default options
 		options: {
 			width : "100%",
@@ -170,14 +168,18 @@
 
 	});
 
+	// fallbacks
+	if( _.isUndefined( Backbone.UI ) ) Backbone.UI = {};
+	Backbone.UI.Slideshow = Slideshow;
+
 	// Support module loaders
 	if ( typeof module === "object" && module && typeof module.exports === "object" ) {
 		// Expose as module.exports in loaders that implement CommonJS module pattern.
-		module.exports = Backbone.UI.Slideshow;
+		module.exports = Slideshow;
 	} else {
 		// Register as a named AMD module, used in Require.js
 		if ( typeof define === "function" && define.amd ) {
-			define( "backbone.ui.slideshow", [], function () { return Backbone.UI.Slideshow; } );
+			define( "backbone.ui.slideshow", [], function () { return Slideshow; } );
 		}
 	}
 	// If there is a window object, that at least has a document property
