@@ -6,7 +6,7 @@
  * Released under the [MIT license](http://makesites.org/licenses/MIT)
  */
 
-(function($, _, Backbone) {
+(function($, _, Backbone, APP) {
 
 	// support for Backbone APP() view if available...
 	var View = ( typeof APP != "undefined" && !_.isUndefined( APP.View ) ) ? APP.View : Backbone.View;
@@ -185,6 +185,13 @@
 	// If there is a window object, that at least has a document property
 	if ( typeof window === "object" && typeof window.document === "object" ) {
 		window.Backbone = Backbone;
+		// update APP namespace
+		if( typeof APP != "undefined" && (_.isUndefined( APP.UI ) || _.isUndefined( APP.UI.Slideshow ) ) ){
+			APP.UI = APP.UI || {};
+			APP.UI.Slideshow = Backbone.UI.Slideshow;
+			window.APP = APP;
+		}
 	}
 
-})(this.jQuery, this._, this.Backbone);
+
+})(this.jQuery, this._, this.Backbone, this.APP);
