@@ -1,10 +1,10 @@
-// Backbone.js Slideshow extension
-//
-// Created by: Makis Tracend (@tracend)
-// Source: https://github.com/backbone-ui/slideshow
-//
-// Licensed under the MIT license:
-// http://makesites.org/licenses/MIT
+/* Backbone UI: Slideshow
+ * Source: https://github.com/backbone-ui/slideshow
+ *
+ * Created by Makis Tracend (@tracend)
+ * Distributed through [Makesites.org](http://makesites.org)
+ * Released under the [MIT license](http://makesites.org/licenses/MIT)
+ */
 
 (function($, _, Backbone) {
 
