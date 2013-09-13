@@ -127,8 +127,6 @@
 					//
 					$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
 				}
-				// re-enable transitions
-				if( this.options.transition ) $wrapper.addClass("transition");
 			}
 			// set the active classes
 			$(this.el).find(".slide:eq("+ num +")").addClass("active").siblings().removeClass("active");
@@ -137,7 +135,12 @@
 			// position the wrapper
 			// limit the container to the right side
 			var wrapperPos = Math.min( ( num * this.options.width), this.options.overflow);
-			$(this.el).find(".wrapper").css({ marginLeft : -1 * wrapperPos });
+			$wrapper.delay(100).queue(function(){
+				// re-enable transitions
+				if( self.options.transition ) $(this).addClass("transition");
+				$(this).css({ marginLeft : -1 * wrapperPos });
+				$(this).dequeue();
+			});
 
 			// update the prev-next arrows - remove as needed
 			if( this.options.autoloop ){
