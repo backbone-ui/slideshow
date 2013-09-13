@@ -103,14 +103,17 @@
 		},
 
 		activate : function( num ){
+			// variables
 			var self = this;
+			var $wrapper = $(this.el).find(".wrapper");
+			// prerequisite
+			if( _.isUndefined( $wrapper ) ) return;
 			// set direction
 			this.options._direction = ( this.options.num - num > 0 )? "left" : "right";
 			// if looping make sure there's always a slide on the sides
 			if( this.options.autoloop ){
 				var $first = $(this.el).find(".slide:first");
 				var $last = $(this.el).find(".slide:last");
-				var $wrapper = $(this.el).find(".wrapper");
 				if( num == 0 ){
 					$last.remove();
 					$wrapper.prepend($last);
