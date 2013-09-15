@@ -151,7 +151,7 @@
 			} else if( num == 0 ){
 				$(this.el).find(".prev").hide();
 				$(this.el).find(".next").show();
-			} else if( num == this.options.slides-1 ){
+			} else if( (num == this.options.slides-1) || (wrapperPos && wrapperPos == this.options.overflow) ){
 				$(this.el).find(".prev").show();
 				$(this.el).find(".next").hide();
 			} else {
