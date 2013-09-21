@@ -159,7 +159,7 @@
 				$(this.el).find(".next").show();
 			}
 			// auto play next slide
-			if( this.options.autoplay && num < this.options.slides-1 ){
+			if( this.options.autoplay && ( num < this.options.slides-1 || ( this.options.slides == 2 && num <= this.options.slides-1 )) ){
 				if( this.timer ) clearTimeout( this.timer );
 				this.timer = setTimeout(function(){
 					//
