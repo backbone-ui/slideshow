@@ -28,7 +28,8 @@
 		events : {
 			"click .prev" : "clickPrev",
 			"click .next" : "clickNext",
-			"click .nav a" : "clickBullet"
+			"click .nav a" : "clickBullet",
+			"webkitTransitionEnd " : "_transitionEnd"
 		},
 
 		timer: false,
@@ -178,6 +179,16 @@
 			// save current slide
 			this.options.num = num;
 
+		},
+
+		_transitionEnd: function(){
+			// internal logic
+			//...
+			// user logic
+			this.transitionEnd();
+		},
+
+		transitionEnd: function(){
 
 		}
 
