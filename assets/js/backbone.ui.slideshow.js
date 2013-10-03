@@ -78,6 +78,8 @@
 
 		position : function(){
 
+			var $wrapper = $(this.el).find(".wrapper");
+
 			$(this.el).find(".slide").css({
 				width : this.options.width,
 				height : this.options.height
@@ -87,7 +89,7 @@
 			this.options.height = $(this.el).find(".slide:first").height();
 
 			var wrapperWidth = this.options.width * this.options.slides;
-			$(this.el).find(".wrapper").css({
+			$wrapper.css({
 				width : wrapperWidth,
 				height : this.options.height
 			});
@@ -96,9 +98,11 @@
 			this.options.overflow = wrapperWidth - $(this.el).width();
 
 			if (this.options.transition) {
-				$(this.el).find(".wrapper").removeClass("transition").css({ marginLeft : -1 * this.options.num * this.options.width }).delay("100").addClass("transition");
+				//$wrapper.removeClass("transition").css({ marginLeft : -1 * this.options.num * this.options.width }).delay("100").addClass("transition");
+				$wrapper.removeClass("transition").css('-webkit-transform', 'translate3d('+ -1 * this.options.num * this.options.width +'px,0,0)').delay("100").addClass("transition");
 			} else {
-				$(this.el).find(".wrapper").css({ marginLeft : -1 * this.options.num * this.options.width });
+				//$wrapper.css({ marginLeft : -1 * this.options.num * this.options.width });
+				$wrapper.css('-webkit-transform', 'translate3d('+ -1 * this.options.num * this.options.width +'px,0,0)');
 			}
 		},
 
@@ -120,7 +124,8 @@
 					num++;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
-					$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
+					//$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
+					$wrapper.css('-webkit-transform', 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)');
 				} else if( num == this.options.slides-1 || (( num * this.options.width) > this.options.overflow ) ){
 					$first.remove();
 					$wrapper.append($first);
@@ -128,7 +133,8 @@
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
 					//
-					$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
+					//$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
+					$wrapper.css('-webkit-transform', 'translate3d('+ -1 * (num-1) * this.options.width +'px,0,0)');
 				}
 			}
 			// set the active classes
@@ -141,7 +147,8 @@
 			$wrapper.delay(100).queue(function(){
 				// re-enable transitions
 				if( self.options.transition ) $(this).addClass("transition");
-				$(this).css({ marginLeft : -1 * wrapperPos });
+				//$(this).css({ marginLeft : -1 * wrapperPos });
+				$(this).css('-webkit-transform', 'translate3d('+ -1 * wrapperPos +'px,0,0)');
 				$(this).dequeue();
 			});
 
