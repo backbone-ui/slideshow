@@ -45,6 +45,7 @@
 
 		// default render - may be overriden if postRender is included
 		render: function(){
+			if(APP) return View.prototype.render.call(this);
 			this.postRender();
 		},
 
@@ -85,9 +86,10 @@
 				height : this.options.height
 			});
 			// update values...
-			this.options.width = $(this.el).find(".slide:first").width();
-			this.options.height = $(this.el).find(".slide:first").height();
-
+			if( $(this.el).find(".slide:first").length ){
+				this.options.width = $(this.el).find(".slide:first").width();
+				this.options.height = $(this.el).find(".slide:first").height();
+			}
 			var wrapperWidth = this.options.width * this.options.slides;
 			$wrapper.css({
 				width : wrapperWidth,
