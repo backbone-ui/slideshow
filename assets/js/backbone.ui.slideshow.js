@@ -53,7 +53,7 @@
 		postRender: function(){
 			// render slide dimensions as a number
 			this.options.width = (this.options.width == "100%") ? $(this.el).width() : this.options.width;
-			this.options.height = (this.options.height) ? $(this.el).height() : this.options.height;
+			this.options.height = (this.options.height == "100%") ? $(this.el).height() : this.options.height;
 			//
 			this.position();
 			// set the first media element as active
