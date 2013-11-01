@@ -52,8 +52,8 @@
 
 		postRender: function(){
 			// render slide dimensions as a number
-			this.options.width = (this.options.width == "100%") ? $(this.el).width() : this.options.width;
-			this.options.height = (this.options.height == "100%") ? $(this.el).height() : this.options.height;
+			this.options.width = this._getSize(this.options.width, $(this.el).width() );
+			this.options.height = this._getSize(this.options.height, $(this.el).height() );
 			//
 			this.position();
 			// set the first media element as active
@@ -179,6 +179,22 @@
 			// save current slide
 			this.options.num = num;
 
+		},
+
+		_getSize: function(value, max){
+			// if a number just return the value
+			if( !isNaN( value ) ) return value;
+			//
+			try{
+				// if in pixels return the numberic value
+				if( value.substr(-2) == "px") return parseInt( value );
+				// if a percentage, calculate it using the max
+				if( value.substr(-1) == "%") return max * ( value.substr(0, value.length-1)/ 100);
+			} catch( e ){
+				//console.log( e );
+				// if NaN...
+				return 0;
+			}
 		},
 
 		_transitionEnd: function(){
