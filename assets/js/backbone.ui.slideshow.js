@@ -38,8 +38,6 @@
 			var self = this;
 			window.addEventListener('resize', function(){ self.position() }, false);
 			//
-			// #1 find the slide number based on either the data or the markup
-			this.options.slides = ( this.collection ) ? this.collection.length : $(this.el).find(".slide").length;
 
 			return View.prototype.initialize.apply(this, arguments );
 		},
@@ -48,6 +46,11 @@
 		render: function(){
 			if(APP) return View.prototype.render.call(this);
 			this.postRender();
+		},
+
+		preRender: function(){
+			// #1 find the slide number based on either the data or the markup
+			this.options.slides = ( this.collection ) ? this.collection.length : $(this.el).find(".slide").length;
 		},
 
 		postRender: function(){
@@ -90,10 +93,12 @@
 				height : this.options.height
 			});
 			// update values...
+			/*
 			if( $(this.el).find(".slide:first").length ){
 				this.options.width = $(this.el).find(".slide:first").width();
 				this.options.height = $(this.el).find(".slide:first").height();
 			}
+			*/
 			var wrapperWidth = this.options.width * this.options.slides;
 			$wrapper.css({
 				width : wrapperWidth,
