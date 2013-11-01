@@ -51,13 +51,16 @@
 		},
 
 		postRender: function(){
+			var self = this;
 			// render slide dimensions as a number
 			this.options.width = this._getSize(this.options.width, $(this.el).width() );
 			this.options.height = this._getSize(this.options.height, $(this.el).height() );
-			//
-			this.position();
-			// set the first media element as active
-			this.activate( 0 );
+			// slight delay to let the DOM rest
+			setTimeout(function(){
+				self.position();
+				// set the first media element as active
+				self.activate( 0 );
+			}, 100);
 		},
 
 		clickPrev : function( e ){
