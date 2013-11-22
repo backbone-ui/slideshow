@@ -62,6 +62,8 @@
 			// render slide dimensions as a number
 			this.options.width = this._getSize(this.options.width, $(this.el).width() );
 			this.options.height = this._getSize(this.options.height, $(this.el).height() );
+			// stop now if we only have one slide
+			if( this.options.slides == 1 ) return;
 			// slight delay to let the DOM rest
 			setTimeout(function(){
 				self.position();
