@@ -235,7 +235,9 @@
 	} else {
 		// Register as a named AMD module, used in Require.js
 		if ( typeof define === "function" && define.amd ) {
-			define( "backbone.ui.slideshow", [], function () { return Slideshow; } );
+			//define( "backbone.ui.slideshow", [], function () { return Slideshow; } );
+			//define( ['jquery', 'underscore', 'backbone'], function () { return Slideshow; } );
+			define( [], function () { return Slideshow; } );
 		}
 	}
 	// If there is a window object, that at least has a document property
