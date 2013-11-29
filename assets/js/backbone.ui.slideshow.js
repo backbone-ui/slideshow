@@ -172,8 +172,10 @@
 			});
 
 			// update the prev-next arrows - remove as needed
-			if( this.options.autoloop ){
-				// do nothing
+			if( this.options.autoloop || $(this.el).width() >= $wrapper.width() ){
+				// hide arrows
+				$(this.el).find(".prev").hide();
+				$(this.el).find(".next").hide();
 			} else if( num == 0 ){
 				$(this.el).find(".prev").hide();
 				$(this.el).find(".next").show();
