@@ -92,7 +92,8 @@
 
 		position : function(){
 
-			var $wrapper = $(this.el).find(".wrapper");
+			var $wrapper = $(this.el).find(".wrapper"),
+				elWidth = $(this.el).width();
 
 			$(this.el).find(".slide").css({
 				width : this.options.width,
@@ -105,14 +106,15 @@
 				this.options.height = $(this.el).find(".slide:first").height();
 			}
 			*/
-			var wrapperWidth = this.options.width * this.options.slides;
+			// wrapper can't be smaller than the el width
+			var wrapperWidth = Math.max( this.options.width * this.options.slides, elWidth );
 			$wrapper.css({
 				width : wrapperWidth,
 				height : this.options.height
 			});
 
 			// position the wrapper
-			this.options.overflow = wrapperWidth - $(this.el).width();
+			this.options.overflow = wrapperWidth - elWidth;
 
 			if (this.options.transition) {
 				//$wrapper.removeClass("transition").css({ marginLeft : -1 * this.options.num * this.options.width }).delay("100").addClass("transition");
