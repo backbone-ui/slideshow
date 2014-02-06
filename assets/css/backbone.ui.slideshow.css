@@ -12,14 +12,16 @@
 	width: 100px;
 	height: 100px;
 	margin-top: -50px;
-	background: rgba(255,255,255, .5);
-	border: solid #fff 8px;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 	color: #fff;
 	font-size: 5em;
 	text-align: center;
 	cursor: pointer;
+	-webkit-text-fill-color: #fff;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: #999;
+	-webkit-font-smoothing: antialiased;
 }
 
 .ui-slideshow .prev {
