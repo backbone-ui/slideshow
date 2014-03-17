@@ -1,7 +1,8 @@
 /* Backbone UI: Slideshow
  * Source: https://github.com/backbone-ui/slideshow
+ * Copyright © Makesites.org
  *
- * Created by Makis Tracend (@tracend)
+ * Initiated by Makis Tracend (@tracend)
  * Distributed through [Makesites.org](http://makesites.org)
  * Released under the [MIT license](http://makesites.org/licenses/MIT)
  */
@@ -172,7 +173,7 @@
 			});
 
 			// update the prev-next arrows - remove as needed
-			if( this.options.autoloop || $(this.el).width() >= $wrapper.width() ){
+			if( this.options.autoloop || this.options.overflow <= 0 ){
 				// hide arrows
 				$(this.el).find(".prev").hide();
 				$(this.el).find(".next").hide();
