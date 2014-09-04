@@ -46,7 +46,7 @@
 	transition: .5s ease;
 }
 
-.ui-slideshow .slide {
+.ui-slideshow .ui-slideshow-slide {
 	float: left;
 	position: relative;
 	width: 100%;

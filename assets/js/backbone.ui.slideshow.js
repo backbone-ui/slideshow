@@ -61,6 +61,8 @@
 
 		postRender: function(){
 			var self = this;
+			// add class in slides
+			$(this.el).find( this.options.slideClass ).addClass("ui-slideshow-slide");
 			// render slide dimensions as a number
 			this.options.width = this._getSize(this.options.width, $(this.el).width() );
 			this.options.height = this._getSize(this.options.height, $(this.el).height() );
