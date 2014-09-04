@@ -15,6 +15,7 @@
 	var Slideshow = View.extend({
 		// default options
 		options: {
+			slideClass: ".slide",
 			width : "100%",
 			height: "100%",
 			num: 0,
@@ -55,7 +56,7 @@
 
 		preRender: function(){
 			// #1 find the slide number based on either the data or the markup
-			this.options.slides = ( this.collection ) ? this.collection.length : $(this.el).find(".slide").length;
+			this.options.slides = ( this.collection ) ? this.collection.length : $(this.el).find( this.options.slideClass ).length;
 		},
 
 		postRender: function(){
@@ -75,13 +76,13 @@
 
 		clickPrev : function( e ){
 			e.preventDefault();
-			var prev = $(this.el).find(".slide.active").prev().index();
+			var prev = $(this.el).find( this.options.slideClass +".active").prev().index();
 			if( prev > -1 ) this.activate( prev );
 		},
 
 		clickNext : function( e ){
 			e.preventDefault();
-			var next = $(this.el).find(".slide.active").next().index();
+			var next = $(this.el).find( this.options.slideClass +".active").next().index();
 			if( next > -1 ) this.activate( next );
 		},
 
@@ -96,15 +97,15 @@
 			var $wrapper = $(this.el).find(".wrapper"),
 				elWidth = $(this.el).width();
 
-			$(this.el).find(".slide").css({
+			$(this.el).find( this.options.slideClass ).css({
 				width : this.options.width,
 				height : this.options.height
 			});
 			// update values...
 			/*
-			if( $(this.el).find(".slide:first").length ){
-				this.options.width = $(this.el).find(".slide:first").width();
-				this.options.height = $(this.el).find(".slide:first").height();
+			if( $(this.el).find( this.options.slideClass +":first").length ){
+				this.options.width = $(this.el).find( this.options.slideClass +":first").width();
+				this.options.height = $(this.el).find( this.options.slideClass +":first").height();
 			}
 			*/
 			// wrapper can't be smaller than the el width
@@ -136,8 +137,8 @@
 			this.options._direction = ( this.options.num - num > 0 )? "left" : "right";
 			// if looping make sure there's always a slide on the sides
 			if( this.options.autoloop ){
-				var $first = $(this.el).find(".slide:first");
-				var $last = $(this.el).find(".slide:last");
+				var $first = $(this.el).find( this.options.slideClass +":first");
+				var $last = $(this.el).find( this.options.slideClass +":last");
 				if( num == 0 ){
 					$last.remove();
 					$wrapper.prepend($last);
@@ -158,7 +159,7 @@
 				}
 			}
 			// set the active classes
-			$(this.el).find(".slide:eq("+ num +")").addClass("active").siblings().removeClass("active");
+			$(this.el).find( this.options.slideClass +":eq("+ num +")").addClass("active").siblings().removeClass("active");
 			$(this.el).find(".nav li:eq("+ num +")").addClass("selected").siblings().removeClass("selected");
 
 			// position the wrapper
