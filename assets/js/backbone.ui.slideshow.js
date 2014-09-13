@@ -16,6 +16,7 @@
 		// default options
 		options: {
 			slideClass: ".slide",
+			navEl: ".nav",
 			width : "100%",
 			height: "100%",
 			num: 0,
@@ -162,7 +163,7 @@
 			}
 			// set the active classes
 			$(this.el).find( this.options.slideClass +":eq("+ num +")").addClass("active").siblings().removeClass("active");
-			$(this.el).find(".nav li:eq("+ num +")").addClass("selected").siblings().removeClass("selected");
+			$(this.el).find( this.options.navEl +" li:eq("+ num +")").addClass("selected").siblings().removeClass("selected");
 
 			// position the wrapper
 			// limit the container to the right side
