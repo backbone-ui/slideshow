@@ -13,6 +13,9 @@
 	var View = ( typeof APP != "undefined" && typeof APP.View != "undefined" ) ? APP.View : Backbone.View;
 
 	var Slideshow = View.extend({
+
+		el: ".ui-slideshow",
+
 		// default options
 		options: {
 			slideClass: ".slide",
