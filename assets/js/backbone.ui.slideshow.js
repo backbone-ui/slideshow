@@ -1,4 +1,5 @@
-/* Backbone UI: Slideshow
+/*
+ * Backbone UI: Slideshow
  * Source: https://github.com/backbone-ui/slideshow
  * Copyright © Makesites.org
  *
@@ -7,10 +8,28 @@
  * Released under the [MIT license](http://makesites.org/licenses/MIT)
  */
 
-(function($, _, Backbone, APP) {
+(function (lib) {
+
+	//"use strict";
+
+	// Support module loaders
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define(['jquery', 'underscore', 'backbone'], lib);
+	} else if ( typeof module === "object" && module && typeof module.exports === "object" ){
+		// Expose as module.exports in loaders that implement CommonJS module pattern.
+		module.exports = lib;
+	} else {
+		// Browser globals
+		lib(window.jQuery, window._, window.Backbone);
+	}
+
+}(function ($, _, Backbone) {
 
 	// support for Backbone APP() view if available...
-	var View = ( typeof APP != "undefined" && typeof APP.View != "undefined" ) ? APP.View : Backbone.View;
+	var isAPP = ( typeof APP !== "undefined" );
+	var View = ( isAPP && typeof APP.View !== "undefined" ) ? APP.View : Backbone.View;
+
 
 	var Slideshow = View.extend({
 
@@ -237,32 +256,23 @@
 
 	});
 
-	// fallbacks
-	if( _.isUndefined( Backbone.UI ) ) Backbone.UI = {};
+	// update Backbone namespace regardless
+	Backbone.UI = Backbone.UI ||{};
 	Backbone.UI.Slideshow = Slideshow;
 
-	// Support module loaders
-	if ( typeof module === "object" && module && typeof module.exports === "object" ) {
-		// Expose as module.exports in loaders that implement CommonJS module pattern.
-		module.exports = Slideshow;
-	} else {
-		// Register as a named AMD module, used in Require.js
-		if ( typeof define === "function" && define.amd ) {
-			//define( "backbone.ui.slideshow", [], function () { return Slideshow; } );
-			//define( ['jquery', 'underscore', 'backbone'], function () { return Slideshow; } );
-			define( [], function () { return Slideshow; } );
-		}
-	}
 	// If there is a window object, that at least has a document property
 	if ( typeof window === "object" && typeof window.document === "object" ) {
-		window.Backbone = Backbone;
 		// update APP namespace
-		if( typeof APP != "undefined" && (_.isUndefined( APP.UI ) || _.isUndefined( APP.UI.Slideshow ) ) ){
+		if( isAPP ){
 			APP.UI = APP.UI || {};
 			APP.UI.Slideshow = Backbone.UI.Slideshow;
 			window.APP = APP;
 		}
+		window.Backbone = Backbone;
 	}
 
+	// for module loaders:
+	return Slideshow;
 
-})(this.jQuery, this._, this.Backbone, this.APP);
+
+}));
