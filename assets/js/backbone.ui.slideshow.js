@@ -146,10 +146,26 @@
 
 			if (this.options.transition) {
 				//$wrapper.removeClass("transition").css({ marginLeft : -1 * this.options.num * this.options.width }).delay("100").addClass("transition");
-				$wrapper.removeClass("transition").css('-webkit-transform', 'translate3d('+ -1 * this.options.num * this.options.width +'px,0,0)').delay("100").addClass("transition");
+				$wrapper.removeClass("transition").css(
+					{
+						'-webkit-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'-o-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'-ms-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'-moz-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)'
+					}
+				).delay("100").addClass("transition");
 			} else {
 				//$wrapper.css({ marginLeft : -1 * this.options.num * this.options.width });
-				$wrapper.css('-webkit-transform', 'translate3d('+ -1 * this.options.num * this.options.width +'px,0,0)');
+				$wrapper.css(
+					{
+						'-webkit-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'-o-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'-ms-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'-moz-transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)',
+						'transform': 'translate('+ -1 * this.options.num * this.options.width +'px,0)'
+					}
+				);
 			}
 		},
 
@@ -181,7 +197,15 @@
 					if( this.options.transition ) $wrapper.removeClass("transition");
 					//
 					//$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
-					$wrapper.css('-webkit-transform', 'translate3d('+ -1 * (num-1) * this.options.width +'px,0,0)');
+					$wrapper.css(
+						{
+							'-webkit-transform': 'translate('+ -1 * (num-1) * this.options.width +'px,0)',
+							'-o-transform': 'translate('+ -1 * (num-1) * this.options.width +'px,0)',
+							'-ms-transform': 'translate('+ -1 * (num-1) * this.options.width +'px,0)',
+							'-moz-transform': 'translate('+ -1 * (num-1) * this.options.width +'px,0)',
+							'transform': 'translate('+ -1 * (num-1) * this.options.width +'px,0)'
+						}
+					);
 				}
 			}
 			// set the active classes
@@ -195,7 +219,16 @@
 				// re-enable transitions
 				if( self.options.transition ) $(this).addClass("transition");
 				//$(this).css({ marginLeft : -1 * wrapperPos });
-				$(this).css('-webkit-transform', 'translate3d('+ -1 * wrapperPos +'px,0,0)');
+				$(this).css(
+					{
+						'-webkit-transform': 'translate('+ -1 * wrapperPos +'px,0)',
+						'-o-transform': 'translate('+ -1 * wrapperPos +'px,0)',
+						'-ms-transform': 'translate('+ -1 * wrapperPos +'px,0)',
+						'-moz-transform': 'translate('+ -1 * wrapperPos +'px,0)',
+						'transform': 'translate('+ -1 * wrapperPos +'px,0)'
+					}
+				)
+				
 				$(this).dequeue();
 			});
 
