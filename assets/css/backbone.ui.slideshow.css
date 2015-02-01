@@ -6,6 +6,7 @@
 }
 
 .ui-slideshow .arrow {
+	display: none;
 	position: absolute;
 	z-index: 10;
 	top: 50%;
