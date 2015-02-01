@@ -26,11 +26,13 @@
 
 }(function ($, _, Backbone) {
 
+	// global scope
+	window = window || this.window || {};
 	// support for Backbone APP() view if available...
 	var isAPP = ( typeof APP !== "undefined" );
 	var View = ( isAPP && typeof APP.View !== "undefined" ) ? APP.View : Backbone.View;
 
-
+	// main view
 	var Slideshow = View.extend({
 
 		el: ".ui-slideshow",
@@ -120,20 +122,18 @@
 
 		position : function(){
 
-			var $wrapper = $(this.el).find(".wrapper"),
-				elWidth = $(this.el).width();
+			var $wrapper = $(this.el).find(".wrapper:first"),
+				elWidth = $(this.el).width(),
+				elHeight = $(this.el).height();
+
+			// update slide dimensions...
+			if( this.options.width !== "100%") this.options.width = elWidth;
+			if( this.options.height !== "100%") this.options.height = elHeight;
 
 			$(this.el).find( this.options.slideClass ).css({
 				width : this.options.width,
 				height : this.options.height
 			});
-			// update values...
-			/*
-			if( $(this.el).find( this.options.slideClass +":first").length ){
-				this.options.width = $(this.el).find( this.options.slideClass +":first").width();
-				this.options.height = $(this.el).find( this.options.slideClass +":first").height();
-			}
-			*/
 			// wrapper can't be smaller than the el width
 			var wrapperWidth = Math.max( this.options.width * this.options.slides, elWidth );
 			$wrapper.css({
@@ -172,7 +172,7 @@
 		activate : function( num ){
 			// variables
 			var self = this;
-			var $wrapper = $(this.el).find(".wrapper");
+			var $wrapper = $(this.el).find(".wrapper:first");
 			// prerequisite
 			if( _.isUndefined( $wrapper ) ) return;
 			// set direction
@@ -228,7 +228,7 @@
 						'transform': 'translate('+ -1 * wrapperPos +'px,0)'
 					}
 				)
-				
+
 				$(this).dequeue();
 			});
 
