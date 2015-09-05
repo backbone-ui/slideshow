@@ -46,7 +46,8 @@ A more detailed list of all the available options.
 
 ## Examples 
 
-* [Fullscreen Slideshow](http://rawgithub.com/backbone-ui/slideshow/master/examples/fullscreen.html)
+* [Fullscreen Slideshow](http://rawgit.com/backbone-ui/slideshow/master/examples/fullscreen.html)
+* [Style 01](http://rawgit.com/backbone-ui/slideshow/master/examples/style01.html)
 
 
 ## Credits
