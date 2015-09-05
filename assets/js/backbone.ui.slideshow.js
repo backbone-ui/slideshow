@@ -184,11 +184,11 @@
 				if( num == 0 ){
 					$last.remove();
 					$wrapper.prepend($last);
-					num++;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
 					//$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
 					$wrapper.css('-webkit-transform', 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)');
+					num++;
 				} else if( num == this.options.slides-1 || (( num * this.options.width) > this.options.overflow ) ){
 					$first.remove();
 					$wrapper.append($first);
