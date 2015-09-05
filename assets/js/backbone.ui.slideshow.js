@@ -187,7 +187,15 @@
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
 					//$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
-					$wrapper.css('-webkit-transform', 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)');
+					$wrapper.css(
+						{
+							'-webkit-transform': 'translate('+ -1 * (num+1) * this.options.width +'px,0)',
+							'-o-transform': 'translate('+ -1 * (num+1) * this.options.width +'px,0)',
+							'-ms-transform': 'translate('+ -1 * (num+1) * this.options.width +'px,0)',
+							'-moz-transform': 'translate('+ -1 * (num+1) * this.options.width +'px,0)',
+							'transform': 'translate('+ -1 * (num+1) * this.options.width +'px,0)'
+						}
+					);
 					num++;
 				} else if( num == this.options.slides-1 || (( num * this.options.width) > this.options.overflow ) ){
 					$first.remove();
@@ -227,7 +235,7 @@
 						'-moz-transform': 'translate('+ -1 * wrapperPos +'px,0)',
 						'transform': 'translate('+ -1 * wrapperPos +'px,0)'
 					}
-				)
+				);
 
 				$(this).dequeue();
 			});
