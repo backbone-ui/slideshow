@@ -71,7 +71,7 @@
 
 		// default render - may be overriden if postRender is included
 		render: function(){
-			if(APP) {
+			if(isAPP) {
 				return View.prototype.render.call(this);
 			} else {
 				this.preRender();
