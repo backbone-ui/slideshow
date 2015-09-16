@@ -48,24 +48,28 @@
 			autoplay: false,
 			autoloop: false,
 			transition: true,
+			draggable: false,
+			dragspeed: 1,
+			monitor: View.prototype.options.monitor || [],
 			timeout: 2000,
 			_direction: "right"
 		},
 
-		events : {
+		events : _.extend({}, View.prototype.events, {
 			"click .prev" : "clickPrev",
 			"click .next" : "clickNext",
 			"click .nav a" : "clickBullet",
 			"webkitTransitionEnd " : "_transitionEnd"
-		},
+		}),
 
 		timer: false,
 
-		initialize: function(){
+		initialize: function( options ){
 			var self = this;
 			window.addEventListener('resize', function(){ self.position() }, false);
-			//
-
+			// check draggable
+			var draggable = options.draggable || this.options.draggable;
+			if( draggable ) this.setupDraggable();
 			return View.prototype.initialize.apply(this, arguments );
 		},
 
@@ -169,6 +173,43 @@
 			}
 		},
 
+		setupDraggable: function(){
+			// prerequisite
+			if( typeof Backbone.Input == "undefined" || typeof Backbone.Input.Mouse == "undefined" ) return console.log("Backbone.Input.Mouse is a required dependency for this plugin");
+			// update options
+			this.options.monitor.push("mouse");
+			this._dragImage_Stop();
+			this.options.mouse = {
+				states: ["down", "move", "up"]
+			};
+
+		},
+
+		// Events
+		mousedown: function(){
+			this._dragImage_Start();
+		},
+
+		mousemove: function( e ){
+			if( this.state.pressing ) this._dragImage( e );
+		},
+
+		mouseup: function(){
+			this._dragImage_Stop();
+		},
+
+		touchstart: function(){
+			this._dragImage_Start();
+		},
+
+		touchmove: function( e ){
+			if( this.state.pressing ) this._dragImage( e );
+		},
+
+		touchend: function(){
+			this._dragImage_Stop();
+		},
+
 		activate : function( num ){
 			// variables
 			var self = this;
@@ -268,6 +309,8 @@
 
 		},
 
+		// Internal
+
 		_getSize: function(value, max){
 			// if a number just return the value
 			if( !isNaN( value ) ) return value;
@@ -293,6 +336,63 @@
 
 		transitionEnd: function(){
 
+		},
+
+		_dragImage_Start: function(){
+			// variables
+			var $wrapper = $(this.el).find(".wrapper");
+			var el = $wrapper[0];
+			var st = window.getComputedStyle(el, null);
+			var tr = st.getPropertyValue("-webkit-transform") ||
+			st.getPropertyValue("-moz-transform") ||
+			st.getPropertyValue("-ms-transform") ||
+			st.getPropertyValue("-o-transform") ||
+			st.getPropertyValue("transform") ||
+			"FAIL";
+			// exit now if we can't read current transform
+			if( tr == "FAIL" ) return;
+			// tr: matrix(0, 0, 0, 0, 0px, 0px)
+			var pos = parseInt( tr.split(",")[4] );
+			if( pos == NaN ) return;
+			// set state
+			this.state.pressing = true; // set by mouse plugin?
+			$wrapper.removeClass("transition");
+
+			this._drag_distance = pos;
+		},
+
+		_dragImage: function( e ){
+			var distance = e.movementX; // mouse or touch movement
+			var $wrapper = $(this.el).find(".wrapper");
+
+			this._drag_distance += distance * this.options.dragspeed;
+			// limit distance to edges
+			this._drag_distance = Math.min(this._drag_distance, 0);
+			this._drag_distance = Math.max(this._drag_distance, -1 * ($wrapper.width()-this.options.width) );
+			//
+			$wrapper.css(
+				{
+					'-webkit-transform': 'translate3d('+ this._drag_distance +'px,0,0)',
+					'-o-transform': 'translate3d('+  this._drag_distance +'px,0,0)',
+					'-ms-transform': 'translate3d('+  this._drag_distance +'px,0,0)',
+					'-moz-transform': 'translate3d('+  this._drag_distance +'px,0,0)',
+					'transform': 'translate3d('+ this._drag_distance +'px,0,0)'
+				}
+			);
+		},
+
+		_dragImage_Stop: function(){
+			// prerequisites
+			if( typeof this._drag_distance == "undefined" ) return;
+			// update state
+			this.state.pressing = false;
+			// update slide num
+			var num = Math.round( Math.abs(this._drag_distance) / this.options.width );
+			this.options.num = (  this._drag_distance > this.options.width * num ) ? num+1 : num-1;
+			// re-enable transition
+			if( this.options.transition ) $(this.el).find(".wrapper").addClass("transition");
+			// move to the closest slide
+			this.activate( num );
 		}
 
 	});
