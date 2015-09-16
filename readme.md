@@ -42,7 +42,7 @@ A more detailed list of all the available options.
 * ***url***: the url of an html fragment
 * ***html***: the markup of the html fragment
 * ***template***: A template method to parse the html fragment
-
+* **draggable**: (Boolean) Allows the slideshow to be updated with a drag motion
 
 ## Examples 
 
