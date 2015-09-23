@@ -32,6 +32,9 @@
 	var isAPP = ( typeof APP !== "undefined" );
 	var View = ( isAPP && typeof APP.View !== "undefined" ) ? APP.View : Backbone.View;
 
+	// FIX: Backbone doesn't set an options attribute?
+	if( !View.prototype.options ) View.prototype.options = {};
+
 	// main view
 	var Slideshow = View.extend({
 
