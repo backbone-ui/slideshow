@@ -311,7 +311,7 @@
 			}
 			// save current slide
 			this.options.num = num;
-
+			this.trigger("slide", {num: num});
 		},
 
 		// Internal
