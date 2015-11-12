@@ -97,6 +97,8 @@
 			// add plugin classes
 			$(this.el).addClass("ui-slideshow");
 			$(this.el).find( this.options.slideClass ).addClass("ui-slideshow-slide");
+			// validate the number of slides (with what's rendered)
+			if(  $(this.el).find( this.options.slideClass ).length !== this.options.slides ) this.options.slides = $(this.el).find( this.options.slideClass ).length;
 			// render slide dimensions as a number
 			this.options.width = this._getSize(this.options.width, $(this.el).width() );
 			this.options.height = this._getSize(this.options.height, $(this.el).height() );
@@ -314,7 +316,7 @@
 			}
 			// save current slide
 			this.options.num = num;
-
+			this.trigger("slide", {num: num});
 		},
 
 		// Internal
