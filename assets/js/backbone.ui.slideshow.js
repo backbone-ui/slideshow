@@ -69,7 +69,8 @@
 
 		initialize: function( options ){
 			var self = this;
-			window.addEventListener('resize', function(){ self.position() }, false);
+			_.bindAll(this, 'position');
+			window.addEventListener('resize', self.position, false);
 			// check draggable
 			var draggable = options.draggable || this.options.draggable;
 			if( draggable ) this.setupDraggable();
@@ -174,6 +175,10 @@
 					}
 				);
 			}
+		},
+
+		disable: function(){
+			window.removeEventListener('resize', self.position, false);
 		},
 
 		setupDraggable: function(){
