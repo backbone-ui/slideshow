@@ -46,6 +46,7 @@
 			navEl: ".nav",
 			width : "100%",
 			height: "100%",
+			html: null,
 			num: 0,
 			slides: 0,
 			autoplay: false,
@@ -89,7 +90,23 @@
 
 		preRender: function(){
 			// #1 find the slide number based on either the data or the markup
-			this.options.slides = ( this.collection ) ? this.collection.length : $(this.el).find( this.options.slideClass ).length;
+			if ( this.collection ){
+				this.options.slides = this.collection.length;
+			} else if( this.options.html ){
+				this.options.slides = $(this.options.html).filter( this.options.slideClass ).length;
+				// create an empty collection with equal set of slides
+				if( this.options.slides ) {
+					this.options.data = true;
+					this.data = this.collection = new Backbone.Collection( new Array( this.options.slides ) );
+				}
+			} else {
+				this.options.slides = $(this.el).find( this.options.slideClass ).length;
+				// create an empty collection with equal set of slides
+				if( this.options.slides ) {
+					this.options.data = true;
+					this.data = this.collection = new Backbone.Collection( new Array( this.options.slides ) );
+				}
+			}
 		},
 
 		postRender: function(){

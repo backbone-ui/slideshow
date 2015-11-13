@@ -1,12 +1,16 @@
 <a class="prev arrow">&lt;</a>
 <a class="next arrow">&gt;</a>
 <ul class="nav">
-{{#each . }}
+{{#each data}}
 	<li><a href="#"></a></li>
 {{/each}}
 </ul>
 <div class="wrapper">
-{{#each . }}
+{{#if options.html}}
+	{{{options.html}}}
+{{else}}
+{{#each data }}
 	<div class="slide" style="background-image: url({{src}})"><!-- --></div>
 {{/each}}
+{{/if}}
 </div>
