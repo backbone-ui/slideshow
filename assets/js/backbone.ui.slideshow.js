@@ -15,7 +15,7 @@
 	// Support module loaders
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
-		define(['jquery', 'underscore', 'backbone'], lib);
+		define('backbone.ui.slideshow', ['jquery', 'underscore', 'backbone'], lib);
 	} else if ( typeof module === "object" && module && typeof module.exports === "object" ){
 		// Expose as module.exports in loaders that implement CommonJS module pattern.
 		module.exports = lib;
@@ -70,6 +70,9 @@
 		timer: false,
 
 		initialize: function( options ){
+			// fallbacks
+			options = options || {};
+			// variables
 			var self = this;
 			_.bindAll(this, 'position');
 			window.addEventListener('resize', self.position, false);
