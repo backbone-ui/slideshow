@@ -29,7 +29,8 @@
 	// global scope
 	window = window || this.window || {};
 	// support for Backbone APP() view if available...
-	var isAPP = ( typeof APP !== "undefined" );
+	APP = APP || window.APP || null;
+	var isAPP = ( APP !== null );
 	var View = ( isAPP && typeof APP.View !== "undefined" ) ? APP.View : Backbone.View;
 
 	// FIX: Backbone doesn't set an options attribute?
