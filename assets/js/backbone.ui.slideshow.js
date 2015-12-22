@@ -35,6 +35,12 @@
 
 	// FIX: Backbone doesn't set an options attribute?
 	if( !View.prototype.options ) View.prototype.options = {};
+	// containers
+	var state = View.prototype.state || new Backbone.Model();
+	// defaults
+	state.set({
+		pressing : false
+	});
 
 	// main view
 	var Slideshow = View.extend({
@@ -68,6 +74,8 @@
 		}),
 
 		timer: false,
+
+		state: state,
 
 		initialize: function( options ){
 			// fallbacks
@@ -222,7 +230,7 @@
 		},
 
 		mousemove: function( e ){
-			if( this.state.pressing ) this._dragImage( e );
+			if( this.state.get('pressing') ) this._dragImage( e );
 		},
 
 		mouseup: function(){
@@ -234,7 +242,7 @@
 		},
 
 		touchmove: function( e ){
-			if( this.state.pressing ) this._dragImage( e );
+			if( this.state.get('pressing') ) this._dragImage( e );
 		},
 
 		touchend: function(){
@@ -386,7 +394,7 @@
 			var pos = parseInt( tr.split(",")[4] );
 			if( pos == NaN ) return;
 			// set state
-			this.state.pressing = true; // set by mouse plugin?
+			this.state.set('pressing', true); // set by mouse plugin?
 			$wrapper.removeClass("transition");
 
 			this._drag_distance = pos;
@@ -416,7 +424,7 @@
 			// prerequisites
 			if( typeof this._drag_distance == "undefined" ) return;
 			// update state
-			this.state.pressing = false;
+			this.state.set('pressing', false);
 			// update slide num
 			var num = Math.round( Math.abs(this._drag_distance) / this.options.width );
 			this.options.num = (  this._drag_distance > this.options.width * num ) ? num+1 : num-1;
