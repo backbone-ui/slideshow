@@ -36,9 +36,7 @@
 	// FIX: Backbone doesn't set an options attribute?
 	if( !View.prototype.options ) View.prototype.options = {};
 	// containers
-	// View.prototype.state doesn't carry setters/getters?
-	//var state = View.prototype.state || new Backbone.Model();
-	var state = new Backbone.Model();
+	var state = View.prototype.state || new Backbone.Model();
 	// defaults
 	state.set({
 		pressing : false
@@ -354,6 +352,11 @@
 			this.options.num = num;
 			this.trigger("slide", {num: num});
 		},
+
+		// Helpers
+
+		// call methods from the parent
+		parent: View.prototype.parent || parent,
 
 		// Internal
 
