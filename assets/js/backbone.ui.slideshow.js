@@ -36,11 +36,17 @@
 	// FIX: Backbone doesn't set an options attribute?
 	if( !View.prototype.options ) View.prototype.options = {};
 	// containers
-	var state = View.prototype.state || new Backbone.Model();
+	// View.prototype.state doesn't carry setters/getters?
+	//var state = View.prototype.state || new Backbone.Model();
+	var state = new Backbone.Model();
 	// defaults
 	state.set({
 		pressing : false
 	});
+
+	// Shims
+	// parent inheritance from Backbone.APP
+	var parent=function(a,b){a=a||"",b=b||{},this.__inherit=this.__inherit||[];var c=this.__inherit[a]||this._parent||{},d=c.prototype||this.__proto__.constructor.__super__,e=d[a]||function(){delete this.__inherit[a]},f=b instanceof Array?b:[b];return this.__inherit[a]=d._parent||function(){},e.apply(this,f)};
 
 	// main view
 	var Slideshow = View.extend({
@@ -82,18 +88,19 @@
 			options = options || {};
 			// variables
 			var self = this;
+			this.state = this.state || state; // why?
 			_.bindAll(this, 'position');
 			window.addEventListener('resize', self.position, false);
 			// check draggable
 			var draggable = options.draggable || this.options.draggable;
 			if( draggable ) this.setupDraggable();
-			return View.prototype.initialize.apply(this, arguments );
+			return this.parent('initialize', options);
 		},
 
 		// default render - may be overriden if postRender is included
 		render: function(){
 			if(isAPP) {
-				return View.prototype.render.call(this);
+				return this.parent('render');
 			} else {
 				this.preRender();
 				this.postRender();
