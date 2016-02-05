@@ -16,7 +16,7 @@
 		-moz-border-radius: 50%;
 		border-radius: 50%;
 		color: #fff;
-		font-size: 5em;
+		font-size: 3em;
 		text-align: center;
 		cursor: pointer;
 		-webkit-text-fill-color: #fff;
@@ -25,21 +25,41 @@
 		-webkit-font-smoothing: antialiased;
 	}
 
-	.prev {
+	.arrow.prev {
 		left: 2%;
+
+		&:before {
+			content: "\2770";
+		}
+	}
+
+	.arrow.next {
+		right: 2%;
+
+		&:before {
+			content: "\2771";
+		}
+	}
+
+	/* legacy browser support */
+	.arrow.lbs {
+		font-size: 5em;
+	}
+
+	.arrow.prev.lbs {
 
 		&:before {
 			content: "<";
 		}
 	}
 
-	.next {
-		right: 2%;
+	.arrow.next.lbs {
 
 		&:before {
 			content: ">";
 		}
 	}
+
 
 	.wrapper {
 		min-width: 100%;
