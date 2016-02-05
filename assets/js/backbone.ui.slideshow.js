@@ -26,10 +26,8 @@
 
 }(function ($, _, Backbone) {
 
-	// global scope
-	window = window || this.window || {};
 	// support for Backbone APP() view if available...
-	APP = APP || window.APP || null;
+	var APP = window.APP || null;
 	var isAPP = ( APP !== null );
 	var View = ( isAPP && typeof APP.View !== "undefined" ) ? APP.View : Backbone.View;
 
