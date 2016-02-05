@@ -54,6 +54,8 @@
 	var view = new Backbone.UI.Slideshow({
 			el : "#slideshow",
 			collection : new Backbone.Collection(slides),
+			inRender: true, // make options available in template
+			autoRender: true,
 			url : "../assets/html/slides.html"
 	});
 
