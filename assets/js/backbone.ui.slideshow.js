@@ -65,6 +65,8 @@
 			dragspeed: 1,
 			monitor: View.prototype.options.monitor || [],
 			timeout: 2000,
+			legacyStyles: false,
+			// internal
 			_direction: "right"
 		},
 
@@ -142,6 +144,10 @@
 				// set the first media element as active
 				self.activate( 0 );
 			}, 100);
+			// include legacy styles
+			if( this.options.legacyStyles ){
+				$(this.el).find(".arrow").addClass("lbs");
+			}
 		},
 
 		clickPrev : function( e ){
