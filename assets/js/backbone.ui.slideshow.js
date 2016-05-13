@@ -88,7 +88,7 @@
 			var self = this;
 			this.state = this.state || state; // why?
 			_.bindAll(this, 'position');
-			window.addEventListener('resize', self.position, false);
+			$(window).on('resize.slideshow', self.position);
 			// check draggable
 			var draggable = options.draggable || this.options.draggable;
 			if( draggable ) this.setupDraggable();
@@ -218,7 +218,22 @@
 		},
 
 		disable: function(){
-			window.removeEventListener('resize', self.position, false);
+			// variables
+			var $el = $(this.el);
+			// remove events
+			$el.unbind();
+			$(window).off('resize.slideshow', self.position);
+			// remove classes
+			$el.removeClass("ui-slideshow");
+			$el.find(".slide").removeClass("ui-slideshow-slide");
+			// remove inline styles
+			// FIX: remove styles on next click (to avoid momentary event triggers)
+			setTimeout(function(){
+				$el.find(".wrapper").attr("style", " ");
+				$el.find(".slide").attr("style", " ");
+				$el.find(".wrapper").removeAttr("style");
+				$el.find(".slide").removeAttr("style");
+			}, 100);
 		},
 
 		setupDraggable: function(){
