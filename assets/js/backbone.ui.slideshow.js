@@ -430,10 +430,12 @@
 		},
 
 		_dragImage: function( e ){
-			var distance = e.movementX; // mouse or touch movement
+			// touch movement; method from backbone.input.touch - fallback if not included...
+			var distance = (this._touchDistance) ? this._touchDistance() : e.movementX;
 			var $wrapper = $(this.el).find(".wrapper");
 
-			this._drag_distance += distance * this.options.dragspeed;
+			this._drag_distance = (distance * this.options.dragspeed) - (this.options.num * this.options.width);
+
 			// limit distance to edges
 			this._drag_distance = Math.min(this._drag_distance, 0);
 			this._drag_distance = Math.max(this._drag_distance, -1 * ($wrapper.width()-this.options.width) );
@@ -455,7 +457,20 @@
 			// update state
 			this.state.set('pressing', false);
 			// update slide num
-			var num = Math.round( Math.abs(this._drag_distance) / this.options.width );
+			var pos = Math.abs(this._drag_distance) / this.options.width;
+			var fn;
+			switch( this.state.get('direction') ){
+				case "left":
+					fn = Math.ceil;
+				break;
+				case "right":
+					fn = Math.floor;
+				break;
+				default:
+					fn = Math.round;
+				break;
+			}
+			var num = fn( pos );
 			this.options.num = (  this._drag_distance > this.options.width * num ) ? num+1 : num-1;
 			// re-enable transition
 			if( this.options.transition ) $(this.el).find(".wrapper").addClass("transition");
