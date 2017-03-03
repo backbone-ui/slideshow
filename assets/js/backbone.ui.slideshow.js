@@ -88,10 +88,10 @@
 			var self = this;
 			this.state = this.state || state; // why?
 			_.bindAll(this, 'position');
+			this.options = _.extend({}, this.options, options);
 			$(window).on('resize.slideshow', self.position);
 			// check draggable
-			var draggable = options.draggable || this.options.draggable;
-			if( draggable ) this.setupDraggable();
+			if( this.options.draggable ) this.setupDraggable();
 			return this.parent('initialize', options);
 		},
 
