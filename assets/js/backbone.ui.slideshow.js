@@ -347,17 +347,17 @@
 			// update the prev-next arrows - remove as needed
 			if( this.options.autoloop || this.options.overflow <= 0 ){
 				// hide arrows
-				$(this.el).find(".prev").hide();
-				$(this.el).find(".next").hide();
+				$(this.el).find(".prev").removeClass("active");
+				$(this.el).find(".next").removeClass("active");
 			} else if( num == 0 ){
-				$(this.el).find(".prev").hide();
-				$(this.el).find(".next").show();
+				$(this.el).find(".prev").removeClass("active");
+				$(this.el).find(".next").addClass("active");
 			} else if( (num == this.options.slides-1) || (wrapperPos && wrapperPos == this.options.overflow) ){
-				$(this.el).find(".prev").show();
-				$(this.el).find(".next").hide();
+				$(this.el).find(".prev").addClass("active");
+				$(this.el).find(".next").removeClass("active");
 			} else {
-				$(this.el).find(".prev").show();
-				$(this.el).find(".next").show();
+				$(this.el).find(".prev").addClass("active");
+				$(this.el).find(".next").addClass("active");
 			}
 			// auto play next slide
 			if( this.options.autoplay && ( num < this.options.slides-1 || ( this.options.slides == 2 && num <= this.options.slides-1 )) ){
