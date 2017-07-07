@@ -1,6 +1,6 @@
 {
 	"name": "backbone.ui.slideshow",
-	"version": "0.7.0",
+	"version": "0.8.0",
 	"main": ["./assets/js/backbone.ui.slideshow.js"],
 	"dependencies": {
 		"backbone" : ">=0.9.10",
