@@ -143,6 +143,7 @@
 				self.position();
 				// set the first media element as active
 				self.activate( 0 );
+				self.state.set('loaded', true);
 			}, 100);
 			// include legacy styles
 			if( this.options.legacyStyles ){
@@ -288,37 +289,32 @@
 				if( num == 0 ){
 					$last.remove();
 					$wrapper.prepend($last);
+					num++;
+					// FIX: autoloop initial state
+					var slide = ( !this.state.get('loaded') ) ? num: num+1;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
-					//$wrapper.css({ marginLeft : -1 * (num+1) * this.options.width });
-					$wrapper.css(
-						{
-							'-webkit-transform': 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)',
-							'-o-transform': 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)',
-							'-ms-transform': 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)',
-							'-moz-transform': 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)',
-							'transform': 'translate3d('+ -1 * (num+1) * this.options.width +'px,0,0)'
-						}
-					);
-					num++;
+
 				} else if( num == this.options.slides-1 || (( num * this.options.width) > this.options.overflow ) ){
 					$first.remove();
 					$wrapper.append($first);
 					num--;
+					// next slide
+					var slide = num-1;
 					// offset the viewport
 					if( this.options.transition ) $wrapper.removeClass("transition");
-					//
-					//$wrapper.css({ marginLeft : -1 * (num-1) * this.options.width });
-					$wrapper.css(
-						{
-							'-webkit-transform': 'translate3d('+ -1 * (num-1) * this.options.width +'px,0,0)',
-							'-o-transform': 'translate3d('+ -1 * (num-1) * this.options.width +'px,0,0)',
-							'-ms-transform': 'translate3d('+ -1 * (num-1) * this.options.width +'px,0,0)',
-							'-moz-transform': 'translate3d('+ -1 * (num-1) * this.options.width +'px,0,0)',
-							'transform': 'translate3d('+ -1 * (num-1) * this.options.width +'px,0,0)'
-						}
-					);
+
 				}
+				// initiate animation
+				$wrapper.css(
+					{
+						'-webkit-transform': 'translate3d('+ -1 * slide * this.options.width +'px,0,0)',
+						'-o-transform': 'translate3d('+ -1 * slide * this.options.width +'px,0,0)',
+						'-ms-transform': 'translate3d('+ -1 * slide * this.options.width +'px,0,0)',
+						'-moz-transform': 'translate3d('+ -1 * slide * this.options.width +'px,0,0)',
+						'transform': 'translate3d('+ -1 * slide * this.options.width +'px,0,0)'
+					}
+				);
 			}
 			// set the active classes
 			$(this.el).find( this.options.slideClass +":eq("+ num +")").addClass("active").siblings().removeClass("active");
@@ -345,7 +341,7 @@
 			});
 
 			// update the prev-next arrows - remove as needed
-			if( this.options.autoloop || this.options.overflow <= 0 ){
+			if( this.options.autoplay || this.options.overflow <= 0 ){
 				// hide arrows
 				$(this.el).find(".prev").removeClass("active");
 				$(this.el).find(".next").removeClass("active");
