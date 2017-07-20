@@ -288,15 +288,16 @@
 			if( _.isUndefined( $wrapper ) ) return;
 			// set direction
 			var direction = ( this.options.direction ) ? this.options.direction : ( ( index - num > 0 )? "left" : "right" );
+			// elements
+			var $numEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']");
+			var $curEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (current+1) +"']");
+			var numIndex = $numEl.index();
+			var curIndex = $curEl.index();
+
 			// if looping make sure there's always a slide on the sides
 			if( this.options.autoloop ){
 				var $first = $(this.el).find( this.options.slideClass +":first");
 				var $last = $(this.el).find( this.options.slideClass +":last");
-				var $numEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']");
-				var $curEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (current+1) +"']");
-				var numIndex = $numEl.index();
-				//var numIndex = $(this.el).find( this.options.slideClass +":eq("+ num +")").index();
-				var curIndex = $curEl.index();
 				//
 				// re-order content
 				if( direction == "left" && numIndex == this.options.slides-1 ){
