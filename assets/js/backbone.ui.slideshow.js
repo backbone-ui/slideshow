@@ -51,6 +51,7 @@
 
 		// default options
 		options: {
+			direction: false,
 			slideClass: ".slide",
 			navEl: ".nav",
 			width : "100%",
@@ -64,9 +65,7 @@
 			dragspeed: 1,
 			monitor: View.prototype.options.monitor || [],
 			timeout: 2000,
-			legacyStyles: false,
-			// internal
-			_direction: "right"
+			legacyStyles: false
 		},
 
 		events : _.extend({}, View.prototype.events, {
@@ -284,31 +283,36 @@
 			var self = this;
 			var $wrapper = $(this.el).find(".wrapper:first"),
 				index = this.state.get('index') || 0,
-				current = this.state.get('current') || 1;
+				current = this.state.get('current') || 0;
 			// prerequisite
 			if( _.isUndefined( $wrapper ) ) return;
 			// set direction
-			this.options._direction = ( index - num > 0 )? "left" : "right";
-
+			var direction = ( this.options.direction ) ? this.options.direction : ( ( index - num > 0 )? "left" : "right" );
 			// if looping make sure there's always a slide on the sides
 			if( this.options.autoloop ){
 				var $first = $(this.el).find( this.options.slideClass +":first");
 				var $last = $(this.el).find( this.options.slideClass +":last");
-				var numIndex = $(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']").index();
+				var $numEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']");
+				var $curEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (current+1) +"']");
+				var numIndex = $numEl.index();
+				//var numIndex = $(this.el).find( this.options.slideClass +":eq("+ num +")").index();
+				var curIndex = $curEl.index();
 				//
 				// re-order content
-				if( this.options._direction == "left" && numIndex == this.options.slides-1 ){
+				if( direction == "left" && numIndex == this.options.slides-1 ){
 					// move content to the front
 					$last.remove();
 					$wrapper.prepend($last);
-					num = 0; // new position
-				} else if( this.options._direction == "right" && numIndex == 0 ){
+					numIndex = 0; // new position
+				} else if( direction == "right" && numIndex == 0 ){
 					// move content to the back
 					$first.remove();
 					$wrapper.append($first);
-					num = this.options.slides;
+					numIndex = this.options.slides-1;
 				}
-				var curIndex = $(this.el).find( this.options.slideClass +"[data-slide='"+ (current) +"']").index();
+				// update indexes
+				numIndex = $numEl.index();
+				curIndex = $curEl.index();
 				// fix num under certain circumstances
 				/*
 				if( num == 0 ){
@@ -336,15 +340,15 @@
 				);
 			}
 			// set the active classes
-			$(this.el).find( this.options.slideClass +":eq("+ num +")").addClass("active").siblings().removeClass("active");
+			$(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']").addClass("active").siblings().removeClass("active");
 			// save current slide
 			current = $(this.el).find( this.options.slideClass +".active" ).attr('data-slide');
-			current = parseInt(current);
-			$(this.el).find( this.options.navEl +" li:eq("+ (current-1) +")").addClass("selected").siblings().removeClass("selected");
+			current = parseInt(current)-1;
+			$(this.el).find( this.options.navEl +" li:eq("+ current +")").addClass("selected").siblings().removeClass("selected");
 
 			// position the wrapper
 			// limit the container to the right side
-			var wrapperPos = Math.min( ( num * this.options.width), this.options.overflow);
+			var wrapperPos = Math.min( ( numIndex * this.options.width), this.options.overflow);
 			$wrapper.delay(100).queue(function(){
 				// re-enable transitions
 				if( self.options.transition ) $(this).addClass("transition");
@@ -382,12 +386,12 @@
 				if( this.timer ) clearTimeout( this.timer );
 				this.timer = setTimeout(function(){
 					//
-					var next = ( num < self.options.slides-1 ) ? num+1 : 0;
+					var next = ( current < self.options.slides-1 ) ? current+1 : 0;
 					self.activate( next );
 				}, this.options.timeout);
 			}
 			// save current slide
-			this.state.set('index', num);
+			this.state.set('index', numIndex);
 			this.state.set('current', current);
 			// broadcast event
 			this.trigger("slide", {num: num});
