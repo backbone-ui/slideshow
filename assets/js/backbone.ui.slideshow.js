@@ -44,6 +44,13 @@
 	// parent inheritance from Backbone.APP
 	var parent=function(a,b){a=a||"",b=b||{},this.__inherit=this.__inherit||[];var c=this.__inherit[a]||this._parent||{},d=c.prototype||this.__proto__.constructor.__super__,e=d[a]||function(){delete this.__inherit[a]},f=b instanceof Array?b:[b];return this.__inherit[a]=d._parent||function(){},e.apply(this,f)};
 
+	Backbone.extend=Backbone.extend||function(){var a=Array.prototype.slice.call(arguments,0);if(a.length){var b=a.shift();for(var c in a){var d=a[c],e=b,f=d.prototype?d.prototype:d;if("object"==typeof f){var g=_.extend({},f);delete g._parent,g._parent=e,b=e.extend(g)}}return b}};
+
+
+	// special case(s) for input views
+	if( typeof Backbone.Input !== "undefined" && Backbone.Input.Touch ) View = Backbone.extend( Backbone.Input.Touch, View );
+	if( typeof Backbone.Input !== "undefined" && Backbone.Input.Mouse ) View = Backbone.extend( Backbone.Input.Mouse, View );
+
 	// main view
 	var Slideshow = View.extend({
 
