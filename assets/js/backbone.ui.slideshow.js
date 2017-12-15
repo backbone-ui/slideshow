@@ -60,7 +60,7 @@
 
 		// default options
 		options: {
-			direction: false,
+			direction: false, // used by autoloop
 			slideClass: ".slide",
 			navEl: ".nav",
 			width : "100%",
@@ -160,7 +160,7 @@
 			setTimeout(function(){
 				self.position();
 				// set the first media element as active
-				self.activate( 0 );
+				self.activate( 1 );
 				self.state.set('loaded', true);
 			}, 100);
 			// include legacy styles
@@ -169,25 +169,41 @@
 			}
 		},
 
-		clickPrev : function( e ){
+		clickPrev: function( e ){
 			e.preventDefault();
-			var prev = $(this.el).find( this.options.slideClass +".active").prev().index();
-			if( prev > -1 ) this.activate( prev );
+			var current = this.state.get('current') || 1;
+			//var prev = $(this.el).find( this.options.slideClass +".active").prev().index();
+			var prev = ( current-1 > 0) ? current-1 : 1;
+			// set direction
+			this.state.set('direction', "left"); // variable based on orientation...
+			// animate
+			this.activate( prev );
 		},
 
-		clickNext : function( e ){
+		clickNext: function( e ){
 			e.preventDefault();
-			var next = $(this.el).find( this.options.slideClass +".active").next().index();
-			if( next > -1 ) this.activate( next );
+			var current = this.state.get('current') || 1;
+			//var next = $(this.el).find( this.options.slideClass +".active").next().index();
+			var next = ( current+1 <  this.options.slides ) ? current+1 : this.options.slides;
+			// set direction
+			this.state.set('direction', "right"); // variable based on orientation...
+			// animate
+			this.activate( next );
 		},
 
-		clickBullet : function( e ){
+		clickBullet: function( e ){
 			e.preventDefault();
-			var num = $(e.target).closest("li").index();
-			this.activate( num );
+			var num = $(e.target).closest("li").index()+1;
+			var current = this.state.get('current') || 1;
+			// set direction
+			var direction = false;
+			if( current - num > 0 ) direction = "left";
+			if( current - num < 0 ) direction = "right";
+			this.state.set('direction', direction); // variable based on orientation...
+			this.activate( num ); // index starts from zero...
 		},
 
-		position : function(){
+		position: function(){
 
 			var $wrapper = $(this.el).find(".wrapper:first"),
 				elWidth = $(this.el).width(),
@@ -545,10 +561,10 @@
 					fn = Math.round;
 				break;
 			}
-			var num = fn( pos );
+			var num = fn( pos ) +1;
 			var index = (  this._drag_distance > this.options.width * num ) ? num+1 : num-1;
 			// save index
-			this.state.set('index', index);
+			this.state.set('current', index);
 			// re-enable transition
 			if( this.options.transition ) $(this.el).find(".wrapper").addClass("transition");
 			// move to the closest slide
