@@ -172,8 +172,9 @@
 		clickPrev: function( e ){
 			e.preventDefault();
 			var current = this.state.get('current') || 1;
+			var end = ( this.options.autoloop ) ? this.options.slides : 1; // consider direction?
 			//var prev = $(this.el).find( this.options.slideClass +".active").prev().index();
-			var prev = ( current-1 > 0) ? current-1 : 1;
+			var prev = ( current-1 > 0) ? current-1 : end;
 			// set direction
 			this.state.set('direction', "left"); // variable based on orientation...
 			// animate
@@ -183,8 +184,9 @@
 		clickNext: function( e ){
 			e.preventDefault();
 			var current = this.state.get('current') || 1;
+			var end = ( this.options.autoloop ) ? 1 : this.options.slides; // consider direction?
 			//var next = $(this.el).find( this.options.slideClass +".active").next().index();
-			var next = ( current+1 <  this.options.slides ) ? current+1 : this.options.slides;
+			var next = ( current+1 <= this.options.slides ) ? current+1 : end;
 			// set direction
 			this.state.set('direction', "right"); // variable based on orientation...
 			// animate
