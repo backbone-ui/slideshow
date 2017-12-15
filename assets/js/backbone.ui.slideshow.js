@@ -28,7 +28,7 @@
 
 	// support for Backbone APP() view if available...
 	var APP = window.APP || null;
-	var isAPP = ( APP !== null );
+	var isAPP = ( APP !== null && typeof APP == 'function' ); // dirty lookup to make sure APP is a contructor
 	var View = ( isAPP && typeof APP.View !== "undefined" ) ? APP.View : Backbone.View;
 
 	// FIX: Backbone doesn't set an options attribute?
