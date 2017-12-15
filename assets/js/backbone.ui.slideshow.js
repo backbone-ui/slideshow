@@ -37,7 +37,9 @@
 	var state = View.prototype.state || new Backbone.Model();
 	// defaults
 	state.set({
-		pressing : false
+		pressing : false,
+		current: false,
+		direction: false
 	});
 
 	// Shims
@@ -91,7 +93,13 @@
 			options = options || {};
 			// variables
 			var self = this;
-			this.state = this.state || state; // why?
+			// independent state container
+			this.state = new Backbone.Model({
+				pressing : false,
+				current: false,
+				direction: false
+			});
+			// defaults //this.state || state; // why?
 			_.bindAll(this, 'position');
 			this.options = _.extend({}, this.options, options);
 			$(window).on('resize.slideshow', self.position);
