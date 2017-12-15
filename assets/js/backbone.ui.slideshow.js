@@ -449,8 +449,11 @@
 			if( this.options.autoplay && this.options.slides > 1 ){
 				if( this.timer ) clearTimeout( this.timer );
 				this.timer = setTimeout(function(){
-					// Stop now if we stoped autoplay in the meantime
+					// Stop now if
+					// - we stoped autoplay in the meantime
 					if( !self.options.autoplay ) return;
+					// - we are pressing (dragging) the slides
+					if( self.state.get('pressing') ) return;
 					// TODO: calculate next based on direction...
 					var next = ( num+1 <= self.options.slides ) ? num+1 : 1; // reset
 					self.activate( next, true );
