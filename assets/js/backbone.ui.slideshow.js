@@ -293,42 +293,72 @@
 			this._dragImage_Stop();
 		},
 
-		activate : function( num ){
+		activate: function( num, auto ){
+			// fallback(s)
+			if( _.isUndefined(auto) ) auto = false;
 			// variables
 			var self = this;
 			var $wrapper = $(this.el).find(".wrapper:first"),
-				index = this.state.get('index') || 0,
-				current = this.state.get('current') || 0;
+				current = this.state.get('current') || 1, // the actual slide number
+				direction = this.state.get('direction');
+
 			// prerequisite
 			if( _.isUndefined( $wrapper ) ) return;
-			// set direction
-			var direction = ( this.options.direction ) ? this.options.direction : ( ( index - num > 0 )? "left" : "right" );
+
 			// elements
-			var $numEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']");
-			var $curEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ (current+1) +"']");
-			var numIndex = $numEl.index();
-			var curIndex = $curEl.index();
+			var $nextEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ num +"']");
+			var $curEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ current +"']");
+			var goto = $nextEl.index();
+			var index = $curEl.index();
+
+			// override with default direction if autoplaying
+			if( this.options.autoplay && auto ){
+				if( this.options.direction ) direction = this.options.direction;
+				if( direction == "left" && goto != index-1 ){
+					// move next content before
+					$curEl.before( $nextEl );
+				} else if( direction == "right" &&  goto != index+1 ){
+					// move next content before
+					$curEl.after( $nextEl );
+				}
+				// update indexes (after re-ordering)
+				index = $curEl.index();
+				goto = $nextEl.index();
+			}
 
 			// if looping make sure there's always a slide on the sides
 			if( this.options.autoloop ){
-				var $first = $(this.el).find( this.options.slideClass +":first");
-				var $last = $(this.el).find( this.options.slideClass +":last");
+
+				//var $first = $(this.el).find( this.options.slideClass +":first");
+				//var $last = $(this.el).find( this.options.slideClass +":last");
 				//
-				// re-order content
-				if( direction == "left" && numIndex == this.options.slides-1 ){
+				// FIX: next loops
+				//if( direction == "left" && current == 1 ) num = this.options.slides;
+				//if( direction == "right" && current == this.options.slides ) num = 1;
+				// update next properties uafter loop updates...
+				//$nextEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ num +"']");
+				//goto = $nextEl.index();
+				// re-order content (if necessary)
+				if( direction == "left" && index == 1 ){
 					// move content to the front
-					$last.remove();
-					$wrapper.prepend($last);
-					numIndex = 0; // new position
-				} else if( direction == "right" && numIndex == 0 ){
+					//$last.remove();
+					//$wrapper.prepend($last);
+					$nextEl.remove();
+					$wrapper.prepend($nextEl);
+					//num = this.options.slides;
+				} else if( direction == "right" && index == this.options.slides ){
 					// move content to the back
-					$first.remove();
-					$wrapper.append($first);
-					numIndex = this.options.slides-1;
+					//$first.remove();
+					//$wrapper.append($first);
+					$nextEl.remove();
+					$wrapper.append($nextEl);
+					//num = 1;
 				}
-				// update indexes
-				numIndex = $numEl.index();
-				curIndex = $curEl.index();
+				// update indexes (after re-ordering)
+				//$nextEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ num +"']");
+				//$curEl = $(this.el).find( this.options.slideClass +"[data-slide='"+ current +"']");
+				index = $curEl.index();
+				goto = $nextEl.index();
 				// fix num under certain circumstances
 				/*
 				if( num == 0 ){
@@ -342,29 +372,25 @@
 					slide = num-1;
 				}
 				*/
-				// offset the viewport
-				if( this.options.transition ) $wrapper.removeClass("transition");
-				// initiate animation
-				$wrapper.css(
-					{
-						'-webkit-transform': 'translate3d('+ -1 * curIndex * this.options.width +'px,0,0)',
-						'-o-transform': 'translate3d('+ -1 * curIndex * this.options.width +'px,0,0)',
-						'-ms-transform': 'translate3d('+ -1 * curIndex * this.options.width +'px,0,0)',
-						'-moz-transform': 'translate3d('+ -1 * curIndex * this.options.width +'px,0,0)',
-						'transform': 'translate3d('+ -1 * curIndex * this.options.width +'px,0,0)'
-					}
-				);
 			}
-			// set the active classes
-			$(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']").addClass("active").siblings().removeClass("active");
-			// save current slide
-			current = $(this.el).find( this.options.slideClass +".active" ).attr('data-slide');
-			current = parseInt(current)-1;
-			$(this.el).find( this.options.navEl +" li:eq("+ current +")").addClass("selected").siblings().removeClass("selected");
-
+			// offset the viewport
+			if( this.options.transition ) $wrapper.removeClass("transition");
+			// initiate animation
+			// - initial position
+			var initialPos = ( typeof this._drag_distance == "number" ) ? this._drag_distance : -1 * index * this.options.width;
+			//if( typeof this._drag_distance == "number" ) initialPos += (( direction == 'right') ? 1 : -1) + this._drag_distance;
+			$wrapper.css(
+				{
+					'-webkit-transform': 'translate3d('+ initialPos +'px,0,0)',
+					'-o-transform': 'translate3d('+ initialPos +'px,0,0)',
+					'-ms-transform': 'translate3d('+ initialPos +'px,0,0)',
+					'-moz-transform': 'translate3d('+ initialPos +'px,0,0)',
+					'transform': 'translate3d('+ initialPos +'px,0,0)'
+				}
+			);
 			// position the wrapper
 			// limit the container to the right side
-			var wrapperPos = Math.min( ( numIndex * this.options.width), this.options.overflow);
+			var wrapperPos = Math.min( ( goto * this.options.width), this.options.overflow);
 			$wrapper.delay(100).queue(function(){
 				// re-enable transitions
 				if( self.options.transition ) $(this).addClass("transition");
@@ -381,16 +407,22 @@
 
 				$(this).dequeue();
 			});
+			// set the active classes
+			num = $nextEl.data('slide');
+			//$(this.el).find( this.options.slideClass +"[data-slide='"+ (num+1) +"']").addClass("active").siblings().removeClass("active");
+			$nextEl.addClass("active").siblings().removeClass("active");
+			//current = $(this.el).find( this.options.slideClass +".active" ).attr('data-slide');
+			$(this.el).find( this.options.navEl +" li:eq("+ (num-1) +")").addClass("selected").siblings().removeClass("selected");
 
 			// update the prev-next arrows - remove as needed
 			if( this.options.autoplay || this.options.overflow <= 0 ){
 				// hide arrows
 				$(this.el).find(".prev").removeClass("active");
 				$(this.el).find(".next").removeClass("active");
-			} else if( num == 0 ){
+			} else if( num <= 1 ){
 				$(this.el).find(".prev").removeClass("active");
 				$(this.el).find(".next").addClass("active");
-			} else if( (num == this.options.slides-1) || (wrapperPos && wrapperPos == this.options.overflow) ){
+			} else if( (num >= this.options.slides) || (wrapperPos && wrapperPos == this.options.overflow) ){
 				$(this.el).find(".prev").addClass("active");
 				$(this.el).find(".next").removeClass("active");
 			} else {
@@ -401,14 +433,15 @@
 			if( this.options.autoplay && this.options.slides > 1 ){
 				if( this.timer ) clearTimeout( this.timer );
 				this.timer = setTimeout(function(){
-					//
-					var next = ( current < self.options.slides-1 ) ? current+1 : 0;
-					self.activate( next );
+					// Stop now if we stoped autoplay in the meantime
+					if( !self.options.autoplay ) return;
+					// TODO: calculate next based on direction...
+					var next = ( num+1 <= self.options.slides ) ? num+1 : 1; // reset
+					self.activate( next, true );
 				}, this.options.timeout);
 			}
 			// save current slide
-			this.state.set('index', numIndex);
-			this.state.set('current', current);
+			this.state.set('current', num);
 			// broadcast event
 			this.trigger("slide", {num: num});
 		},
@@ -474,10 +507,9 @@
 			// touch movement; method from backbone.input.touch - fallback if not included...
 			var distance = (this._touchDistance) ? this._touchDistance() : e.movementX;
 			var $wrapper = $(this.el).find(".wrapper");
-			var index = this.state.get('index');
+			var index = this.state.get('current');
 
-
-			this._drag_distance = (distance * this.options.dragspeed) - (index * this.options.width);
+			this._drag_distance = (distance * this.options.dragspeed) - ((index-1) * this.options.width);
 
 			// limit distance to edges
 			this._drag_distance = Math.min(this._drag_distance, 0);
